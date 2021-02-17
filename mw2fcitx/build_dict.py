@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from .pipeline import MWFPipeline
+from pipeline import MWFPipeline
 
 
 def build(config):

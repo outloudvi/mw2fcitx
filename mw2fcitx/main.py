@@ -4,8 +4,8 @@ import re
 import sys
 from argparse import ArgumentParser
 from importlib import import_module
-from .build_dict import build
-from .utils import console, sanitize
+from build_dict import build
+from utils import console, sanitize
 
 
 def get_args():

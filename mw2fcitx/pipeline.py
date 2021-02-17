@@ -2,9 +2,9 @@
 
 import os
 import sys
-from .fetch import fetch_all_titles
-from .utils import dedup
-from .utils import console
+from fetch import fetch_all_titles
+from utils import dedup
+from utils import console
 
 
 class MWFPipeline():

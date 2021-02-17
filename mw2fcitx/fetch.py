@@ -1,8 +1,8 @@
 import json
 from urllib.request import Request, urlopen
 from urllib.parse import quote_plus
-from .utils import console
-from .retry import retry
+from utils import console
+from retry import retry
 
 
 class StatusError(Exception):
