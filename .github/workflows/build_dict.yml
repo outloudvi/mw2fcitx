@@ -12,10 +12,10 @@ permissions:
 jobs:
   build-and-publish:
     if: (contains(github.event_name, 'schedule') || !contains(github.event.commits[0].message, 'ci ckip'))
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
           persist-credentials: false
@@ -28,7 +28,7 @@ jobs:
           docker run -v $GITHUB_WORKSPACE/artifacts:/artifacts -v $GITHUB_WORKSPACE/toolkit:/toolkit archlinux:base-devel bash /toolkit/utils/build.sh
 
       - name: Checkout profile
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
           persist-credentials: false
