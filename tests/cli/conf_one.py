@@ -2,7 +2,7 @@ from mw2fcitx.tweaks.moegirl import tweaks
 
 exports = {
     "source": {
-        "api_path": "https://zh.moegirl.org.cn/api.php",
+        "api_path": "https://zh.wikipedia.org/w/api.php",
         "kwargs": {
             "title_limit": 50,
             "output": "titles.txt"
