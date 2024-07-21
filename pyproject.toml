@@ -38,12 +38,14 @@ pypinyin = "^0.51.0"
 python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^3.2.5"
-yapf = "^0.40.2"
-pytest = "^8.3.1"
-pytest-cov = "^5.0.0"
 coverage = "^7.6.0"
+pylint = "^3.2.5"
+pytest = "^8.3.1"
+yapf = "^0.40.2"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
+
+[tool.yapf]
+based_on_style = "google"
