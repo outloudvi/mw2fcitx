@@ -5,6 +5,7 @@ name: Tests
 
 on:
   push:
+    branches: ['master']
   pull_request:
     branches: ['master']
 
@@ -17,6 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install libime
+        run: sudo apt install -y libime-bin
+
+      - name: Install Poetry
+        run: pipx install poetry
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
@@ -27,7 +34,7 @@ jobs:
         run: |
           poetry install
           poetry env info
-          poetry env show
+          poetry show
 
       - name: Lint with yapf
         run: poetry run yapf -i -r mw2fcitx
