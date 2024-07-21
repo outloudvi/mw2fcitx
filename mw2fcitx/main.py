@@ -75,7 +75,3 @@ def main():
     console.debug(
         json.dumps(displayable_config_object, indent=2, sort_keys=True))
     build(config_object)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,9 @@
 #!/bin/bash
-python setup.py install
-pip install pytest pytest-cov coverage
+set -e
+
+poetry install
+poetry shell
 coverage erase
-coverage run --source=mw2fcitx -m pytest tests/lib
-coverage run -a --source=mw2fcitx -m mw2fcitx.main -c tests/cli/conf_one.py
+coverage run -m pytest tests/lib
+coverage run -a -m mw2fcitx.main -c tests/cli/conf_one.py
 coverage html
