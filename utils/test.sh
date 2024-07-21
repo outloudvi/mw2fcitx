@@ -2,8 +2,7 @@
 set -e
 
 poetry install
-poetry shell
-coverage erase
-coverage run -m pytest tests/lib
-coverage run -a -m mw2fcitx.main -c tests/cli/conf_one.py
-coverage html
+poetry run coverage erase
+poetry run coverage run -m pytest
+poetry run coverage run -a -m mw2fcitx.main -c tests/cli/conf_one.py
+poetry run coverage html

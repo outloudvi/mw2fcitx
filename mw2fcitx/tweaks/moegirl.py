@@ -57,6 +57,7 @@ def tweak_split_word_with(spliters):
 
 
 def tweak_trim_suffix(suffixes):
+
     def cb(items: [str]):
         ret = []
         for i in items:
@@ -76,9 +77,7 @@ def tweak_remove_regex(regexes):
         ret = items
 
         for rgx in compiled_regexes:
-            ret = filter(
-                lambda x, rgx=rgx: not rgx.match(x), ret
-            )
+            ret = filter(lambda x, rgx=rgx: not rgx.match(x), ret)
         return list(ret)
 
     return cb
@@ -98,8 +97,5 @@ tweaks = [
     tweak_len_more_than(1),
     tweak_remove_char("·"),
     tweak_trim_suffix(["系列", "列表", "对照表"]),
-    tweak_remove_regex([
-        "^第.*(次|话)$"
-    ]),
-    tweak_normalize
+    tweak_remove_regex(["^第.*(次|话)$"]), tweak_normalize
 ]
