@@ -4,6 +4,8 @@ from pypinyin import lazy_pinyin
 import opencc
 from ..utils import console
 
+DEFAULT_PLACEHOLDER = "_ERROR_"
+
 
 def manual_fix(text, table):
     if text in table:
@@ -17,15 +19,14 @@ def export(words, **kwargs):
     fixfile = kwargs.get("fixfile")
     if fixfile is not None:
         table = json.load(open(fixfile, "r", encoding="utf-8"))
-    HANZI_RE = re.compile('^[\u4e00-\u9fa5]+$')
     count = 0
-    last_word = None
     for line in words:
         line = line.rstrip("\n")
-        if not HANZI_RE.match(line):
+        pinyins = lazy_pinyin(line, errors=lambda x: DEFAULT_PLACEHOLDER)
+        if DEFAULT_PLACEHOLDER in pinyins:
+            # The word is not fully converable
             continue
-
-        pinyin = "'".join(lazy_pinyin(line))
+        pinyin = "'".join(pinyins)
         if pinyin == line:
             # print("Failed to convert, ignoring:", pinyin, file=sys.stderr)
             continue
@@ -35,8 +36,6 @@ def export(words, **kwargs):
             if fixed_pinyin is not None:
                 pinyin = fixed_pinyin
                 console.debug(f"Fixing {line} to {pinyin}")
-
-        last_word = line
 
         result += "\t".join((converter.convert(line), pinyin, "0"))
         result += "\n"
