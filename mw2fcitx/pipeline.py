@@ -45,7 +45,8 @@ class MWFPipeline():
         limit = kwargs.get("file_title_limit") or kwargs.get(
             "title_limit") or -1
         if not os.access(filename, os.R_OK):
-            console.error(f"File {filename} is not readable")
+            console.error(
+                f"File {filename} is not readable; remove this parameter (\"file_path\") or provide a readable file")
             sys.exit(1)
         self.load_titles(open(filename, "r").read(), limit=limit)
 
@@ -71,7 +72,8 @@ class MWFPipeline():
             titles = i(titles)
         console.debug(f"Deduplicating {len(titles)} items")
         self.words = dedup(titles)
-        console.debug(f"Deduplication completed. {len(self.words)} items left.")
+        console.debug(
+            f"Deduplication completed. {len(self.words)} items left.")
 
     def export_words(self, converter="opencc", **kwargs):
         if converter == "opencc":
