@@ -1,7 +1,9 @@
+name: '[moegirl] Trigger Automatic Dictionary Build'
+
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "37 20 14 * *"
+    - cron: '37 20 14 * *'
 
 jobs:
   trigger-bnp:
