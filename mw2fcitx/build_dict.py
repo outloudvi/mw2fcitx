@@ -20,7 +20,11 @@ def build(config):
         if isinstance(title_file_path, str):
             title_file_path = [title_file_path]
         for i in title_file_path:
-            pipeline.load_titles_from_file(i, **config["source"].get("kwargs"))
+            source_kwargs = config["source"].get("kwargs")
+            if source_kwargs is None:
+                logging.warn("source.kwargs does not exist; assuming null")
+                source_kwargs = {}
+            pipeline.load_titles_from_file(i, **source_kwargs)
     pipeline.convert_to_words(config["tweaks"])
     pipeline.export_words(config["converter"].get("use"),
                           **config["converter"].get("kwargs"))
