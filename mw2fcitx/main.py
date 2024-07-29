@@ -74,6 +74,9 @@ def main():
     config_object = getattr(config_base, objname)
     console.debug("Config load:")
     displayable_config_object = sanitize(config_object)
+    if not isinstance(config_object, object):
+        console.error("Invalid config")
+        sys.exit(1)
     console.debug(
         json.dumps(displayable_config_object, indent=2, sort_keys=True))
     if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
