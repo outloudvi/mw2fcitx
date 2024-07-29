@@ -1,12 +1,14 @@
 import json
 import os
 import re
+import shutil
 import sys
 from argparse import ArgumentParser
 from importlib import import_module
 
 from .build_dict import build
-from .utils import console, sanitize
+from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
+from .utils import console, sanitize, is_libime_used
 
 
 def get_args():
@@ -74,4 +76,7 @@ def main():
     displayable_config_object = sanitize(config_object)
     console.debug(
         json.dumps(displayable_config_object, indent=2, sort_keys=True))
+    if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
+        console.warn(
+            f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}")
     build(config_object)
