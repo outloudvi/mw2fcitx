@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Install libime
         run: sudo apt install -y libime-bin
@@ -25,7 +25,7 @@ jobs:
         run: pipx install poetry
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
           python-version: '3.12'
           cache: 'poetry'
@@ -40,4 +40,12 @@ jobs:
         run: poetry run yapf -i -r mw2fcitx
 
       - name: Test with pytest
-        run: poetry run pytest
+        run: |
+          poetry run coverage erase
+          poetry run coverage run -m pytest tests/
+          poetry run coverage run -a -m mw2fcitx.main -c tests/cli/conf_one.py
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
