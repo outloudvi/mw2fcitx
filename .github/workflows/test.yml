@@ -41,10 +41,8 @@ jobs:
 
       - name: Test with pytest
         run: |
-          poetry run coverage erase
-          poetry run coverage run -m pytest tests/
-          poetry run coverage run -a -m mw2fcitx.main -c tests/cli/conf_one.py
-          poetry run coverage report
+          poetry run pytest tests/
+          poetry run mw2fcitx -c tests/cli/conf_one.py
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
