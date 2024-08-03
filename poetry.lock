@@ -175,26 +175,27 @@ files = [
 
 [[package]]
 name = "opencc"
-version = "1.1.7"
+version = "1.1.8"
 description = "Conversion between Traditional and Simplified Chinese"
 optional = false
 python-versions = "*"
 files = [
-    {file = "OpenCC-1.1.7-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ba77d5eb376129adcad090a07b0edbee293f26513f14a135a9cb17af004defd1"},
-    {file = "OpenCC-1.1.7-cp310-cp310-manylinux1_x86_64.whl", hash = "sha256:fc4fb3ec08dcbdb430cbd70d14f9457f2b2ef2d51b08bf079b9cee0c6def3eed"},
-    {file = "OpenCC-1.1.7-cp310-cp310-win_amd64.whl", hash = "sha256:8fa764bbb93ff97f50d1f70ca2542c9108adb763845d690e256664a61c98f914"},
-    {file = "OpenCC-1.1.7-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:8aa4b1203bf78ced40ae4da7206089ccd459f823a1b05f311b653eb08dce7d0d"},
-    {file = "OpenCC-1.1.7-cp311-cp311-manylinux1_x86_64.whl", hash = "sha256:3ed6f128383375b9dc5c3db02ffa9d6ac1a14242656414bab85a18ef65daf645"},
-    {file = "OpenCC-1.1.7-cp311-cp311-win_amd64.whl", hash = "sha256:d2d4705b3f599903784b4d4be6a557c591aeeb93d2b99b8f19d3e13dee4fab10"},
-    {file = "OpenCC-1.1.7-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:253e7d636ad0aad2e70e616d2185181e0104687f53ec38974f7b67221c475382"},
-    {file = "OpenCC-1.1.7-cp312-cp312-manylinux1_x86_64.whl", hash = "sha256:dc5d6443b833e1a45bcad4d4312c680d9d574a365491357165d927a3eecac5f0"},
-    {file = "OpenCC-1.1.7-cp312-cp312-win_amd64.whl", hash = "sha256:7f3f843f0b47afa0bff91ea5b9fbf9968f19ffbaffda9508615993058246ca3c"},
-    {file = "OpenCC-1.1.7-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:49c2eb39f636c948eaa21a84f4553da761a9cca5aa0dede8570729d572712531"},
-    {file = "OpenCC-1.1.7-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:49bbf40042702a743ad5b65398fc3faf1582e41fc948cd9bbbabe7c3e5366cd6"},
-    {file = "OpenCC-1.1.7-cp38-cp38-win_amd64.whl", hash = "sha256:06092f06e4b8a1f2563df03214c9f6fa457c9ff6d114f76bf9fb374cc2a4591f"},
-    {file = "OpenCC-1.1.7-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a16b7ed7d01b77b133a51e41903c5c83486de5be5483164c869ed34b9bbfdaf7"},
-    {file = "OpenCC-1.1.7-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:b55ad5edf93a45e89519fa4aa80384d7021fd795fdf8c9315b6898fa2a0e202a"},
-    {file = "OpenCC-1.1.7-cp39-cp39-win_amd64.whl", hash = "sha256:6455d2548e2211d28cfa68d25aceeb4ff06c6a396264dcefe5a2b885ffeaf783"},
+    {file = "OpenCC-1.1.8-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:9b968fcaa55f7a0afd44cd22240a90bf33e4cf26591250bf87b8c148fd3f564b"},
+    {file = "OpenCC-1.1.8-cp310-cp310-manylinux2014_x86_64.whl", hash = "sha256:76edd60b09bfe0acc546b49a5687fe71487771aee28b45fa22f993602d8400ff"},
+    {file = "OpenCC-1.1.8-cp310-cp310-win_amd64.whl", hash = "sha256:78fe5982d88170940fb5d4960c58a4d8519eb1d5bef3788bee9aeb9147b03048"},
+    {file = "OpenCC-1.1.8-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:1b1166f6a73faf21ecf0e2919fc1685ca2853c01f12360cee67154c658ce050f"},
+    {file = "OpenCC-1.1.8-cp311-cp311-manylinux2014_x86_64.whl", hash = "sha256:2132e02726b981786955e9c8b23d96e440e7c782e7e25c40f8df8a88b3b48810"},
+    {file = "OpenCC-1.1.8-cp311-cp311-win_amd64.whl", hash = "sha256:7fd8a60c826df1ffec24d59329abfd3c48f3e1ba7a3ce90a16ff434b34bbda10"},
+    {file = "OpenCC-1.1.8-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:9b7d7909064b8eb05a1a7a62d496dff413e6456786cd4dfcd05ed55f3d89fe97"},
+    {file = "OpenCC-1.1.8-cp312-cp312-manylinux2014_x86_64.whl", hash = "sha256:6e620953210068e3ba1c2fb9d40320d9666e853c39ddf97cc9fc72e1cc8f3008"},
+    {file = "OpenCC-1.1.8-cp312-cp312-win_amd64.whl", hash = "sha256:19158433294a5c2e9f24f9461976f40240f04c54ed309a1f9d47c8e628bd9748"},
+    {file = "OpenCC-1.1.8-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:7c46e1f2cb8e74eadb1eac2034c84d937272e0f7e50c8efbaee14b51d61ddea4"},
+    {file = "OpenCC-1.1.8-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:de1553ad0146b19908c01c44d65e9134cb31f0b98deed6355324408346b22286"},
+    {file = "OpenCC-1.1.8-cp38-cp38-win_amd64.whl", hash = "sha256:97826f62fe1ab03b18bce1390f296d07592f5b2e9345dfd1f2699998ad8b8bf0"},
+    {file = "OpenCC-1.1.8-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:9d1ee4abf4042f4a894723a9dac29f3ea6ff611c5afc4f945cbbcc7cf4a4ba18"},
+    {file = "OpenCC-1.1.8-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:d60c4f3d0de8ef488b4b51767e4d7841dd0677847f33dd666e81b4b318214c19"},
+    {file = "OpenCC-1.1.8-cp39-cp39-win_amd64.whl", hash = "sha256:3fa7a4f326409c68883542111941d603d8c8c09ee746cc3c92579a55c5d65c50"},
+    {file = "opencc-1.1.8.tar.gz", hash = "sha256:d380b1b6de580f6b72325d16b48ca3a1b9b2715640ebe3ea760910bcf5c78739"},
 ]
 
 [[package]]
@@ -271,13 +272,13 @@ testutils = ["gitpython (>3)"]
 
 [[package]]
 name = "pypinyin"
-version = "0.51.0"
+version = "0.52.0.dev1"
 description = "汉字拼音转换模块/工具."
 optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, <4"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,<4,>=2.6"
 files = [
-    {file = "pypinyin-0.51.0-py2.py3-none-any.whl", hash = "sha256:ae8878f08fee15d0c5c11053a737e68a4158c22c63dc632b4de060af5c95bf84"},
-    {file = "pypinyin-0.51.0.tar.gz", hash = "sha256:cede34fc35a79ef6c799f161e2c280e7b6755ee072fb741cae5ce2a60c4ae0c5"},
+    {file = "pypinyin-0.52.0.dev1-py2.py3-none-any.whl", hash = "sha256:de6178f6da81ad309237532f32395c19585d1d99cb7d5faa53cb225ca882bca9"},
+    {file = "pypinyin-0.52.0.dev1.tar.gz", hash = "sha256:9eb5ec7eb8c1521764013970fd1d418f7a2afc4f0a49ec0e539b18ae56d88fd2"},
 ]
 
 [[package]]
@@ -369,4 +370,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "98beaae67ea51aa0b75147f01715fd9b92fa3431f7ca7a013659a2c32c7648f1"
+content-hash = "2b246466255122556a966bc31267e9e3df03ef0a36721b3355244e3d7f359579"
