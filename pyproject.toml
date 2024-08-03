@@ -27,7 +27,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/outloudvi/mw2fcitx/"
-version = "0.14.1"
+version = "0.14.2"
 
 [tool.poetry.scripts]
 mw2fcitx = 'mw2fcitx.main:main'
@@ -38,11 +38,11 @@ pypinyin = "^0.52.0.dev1"
 python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
+coverage = "^7.6.0"
 pylint = "^3.2.5"
 pytest = "^8.3.1"
-yapf = "^0.40.2"
 pytest-cov = "^5.0.0"
-coverage = "^7.6.0"
+yapf = "^0.40.2"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
