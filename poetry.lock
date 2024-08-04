@@ -275,13 +275,13 @@ testutils = ["gitpython (>3)"]
 
 [[package]]
 name = "pypinyin"
-version = "0.52.0.dev1"
+version = "0.52.0"
 description = "汉字拼音转换模块/工具."
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,<4,>=2.6"
 files = [
-    {file = "pypinyin-0.52.0.dev1-py2.py3-none-any.whl", hash = "sha256:de6178f6da81ad309237532f32395c19585d1d99cb7d5faa53cb225ca882bca9"},
-    {file = "pypinyin-0.52.0.dev1.tar.gz", hash = "sha256:9eb5ec7eb8c1521764013970fd1d418f7a2afc4f0a49ec0e539b18ae56d88fd2"},
+    {file = "pypinyin-0.52.0-py2.py3-none-any.whl", hash = "sha256:203b2035c323957ff77189deb607c168577a888b6fb7248976b6d952b3fb77da"},
+    {file = "pypinyin-0.52.0.tar.gz", hash = "sha256:2e7cc0911278e0db334c97f028aa7ccad535e028f57bc539296b04f475e04ecd"},
 ]
 
 [[package]]
@@ -391,4 +391,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "7a7df40c63f54141a4da14590236df8da4c288e9f9a16968ea9bd78ec71ce116"
+content-hash = "3a2ed709c40848d85b896959392f3feb1a5a26505e2b8321fc83956f1c28f81b"
