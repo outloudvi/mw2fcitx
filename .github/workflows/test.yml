@@ -41,9 +41,7 @@ jobs:
         run: poetry run yapf -i -r mw2fcitx
 
       - name: Test with pytest
-        run: |
-          poetry run pytest tests/
-          poetry run mw2fcitx -c tests/cli/conf_one.py
+        run: make test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
