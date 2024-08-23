@@ -21,7 +21,3 @@ def test_opencc_exporter():
         ]) == "测试\tce'shi\t0\n"
 
     )
-
-
-if __name__ == "__main__":
-    test_opencc_exporter()

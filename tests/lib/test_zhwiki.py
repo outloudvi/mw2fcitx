@@ -8,7 +8,3 @@ def test_pipeline_basic():
     pipeline.convert_to_words(moegirl_tweaks)
     pipeline.export_words()
     pipeline.generate_dict(generator="rime")
-
-
-if __name__ == "__main__":
-    test_pipeline_basic()
