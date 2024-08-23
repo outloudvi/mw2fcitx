@@ -56,6 +56,8 @@ based_on_style = "google"
 branch = true
 omit = [
   "*/.venv/*",
+  "mw2fcitx/sample_config.py",
+  "tests/cli/conf_*.py",
 ]
 
 [tool.coverage.html]
