@@ -24,6 +24,7 @@ name = "mw2fcitx"
 package-mode = true
 packages = [
   {include = "mw2fcitx"},
+  {include = "tests", format = "sdist"},
 ]
 readme = "README.md"
 repository = "https://github.com/outloudvi/mw2fcitx/"
