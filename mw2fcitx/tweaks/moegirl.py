@@ -1,16 +1,17 @@
 # This collation file is for moegirl.org.
 # It MIGHT NOT be fit for other wikis.
+from typing import List
 from ..utils import normalize
 
 
-def dont_have(string: str, array: [str]):
+def dont_have(string: str, array: List[str]):
     for i in array:
         if string.find(i) != -1:
             return False
     return True
 
 
-def split_and_merge_single(group: [str], spliter: str):
+def split_and_merge_single(group: List[str], spliter: str):
     ret = []
     for i in group:
         for j in i.split(spliter):
@@ -44,7 +45,7 @@ def tweak_remove_word_includes(items):
 
 def tweak_split_word_with(spliters):
 
-    def cb(items: [str]):
+    def cb(items: List[str]):
         ret = items
         for i in spliters:
             tmp = []
@@ -58,7 +59,7 @@ def tweak_split_word_with(spliters):
 
 def tweak_trim_suffix(suffixes):
 
-    def cb(items: [str]):
+    def cb(items: List[str]):
         ret = []
         for i in items:
             for j in suffixes:
@@ -73,7 +74,7 @@ def tweak_remove_regex(regexes):
     from re import compile
     compiled_regexes = list(map(compile, regexes))
 
-    def cb(items: [str]):
+    def cb(items: List[str]):
         ret = items
 
         for rgx in compiled_regexes:

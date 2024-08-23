@@ -1,8 +1,7 @@
 import json
-import re
 from pypinyin import lazy_pinyin
 import opencc
-from ..utils import console
+from ..logger import console
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
 

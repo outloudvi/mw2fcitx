@@ -2,7 +2,7 @@ import tempfile
 import subprocess
 
 from ..const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
-from ..utils import console
+from ..logger import console
 
 
 def gen(text, **kwargs):
