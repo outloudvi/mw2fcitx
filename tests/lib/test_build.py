@@ -22,7 +22,3 @@ def test_pipeline_basic():
     assert ("朝之琉璃	zhao zhi liu li" in open('test.dict.yml',
                                            "r",
                                            encoding='utf-8').read())
-
-
-if __name__ == "__main__":
-    test_pipeline_basic()
