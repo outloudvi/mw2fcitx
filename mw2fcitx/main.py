@@ -11,7 +11,7 @@ from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
 from .utils import console, sanitize, is_libime_used
 
 
-def get_args():
+def get_args(args):
     parser = ArgumentParser(
         usage="Fetch titles from online and generate a dictionary.")
     parser.add_argument("-c",
@@ -25,7 +25,7 @@ def get_args():
                         default="exports",
                         help="configuration object name")
 
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def try_file(file):
@@ -50,8 +50,8 @@ def try_file(file):
     return config_file
 
 
-def main():
-    options = get_args()
+def inner_main(args):
+    options = get_args(args)
     file = options.config
     objname = options.name
     if file.endswith(".py"):
@@ -83,3 +83,7 @@ def main():
         console.warn(
             f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}")
     build(config_object)
+
+
+def main():
+    inner_main(sys.argv)
