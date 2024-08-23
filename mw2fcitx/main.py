@@ -6,9 +6,10 @@ import sys
 from argparse import ArgumentParser
 from importlib import import_module
 
+
 from .build_dict import build
 from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
-from .utils import console, sanitize, is_libime_used
+from .utils import console, sanitize, is_libime_used, smart_rewrite
 
 
 def get_args(args):
@@ -79,6 +80,7 @@ def inner_main(args):
         sys.exit(1)
     console.debug(
         json.dumps(displayable_config_object, indent=2, sort_keys=True))
+    config_object = smart_rewrite(config_object)
     if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
         console.warn(
             f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}")
