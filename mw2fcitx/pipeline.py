@@ -5,7 +5,7 @@ import sys
 
 from .fetch import fetch_all_titles
 from .utils import dedup
-from .utils import console
+from .logger import console
 
 
 class MWFPipeline():

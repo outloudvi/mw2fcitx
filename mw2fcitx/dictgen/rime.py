@@ -1,5 +1,5 @@
 import re
-from ..utils import console
+from ..logger import console
 
 
 def gen(text, **kwargs):

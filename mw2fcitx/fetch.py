@@ -8,7 +8,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 from urllib.parse import quote_plus
 
-from .utils import console
+from .logger import console
 from .retry import retry
 
 
@@ -78,7 +78,8 @@ def fetch_all_titles(api_url, **kwargs):
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
-            fetch_url = api_url + f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={quote_plus(apcontinue)}"
+            fetch_url = api_url + \
+                f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
     try:

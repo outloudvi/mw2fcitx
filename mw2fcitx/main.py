@@ -9,7 +9,8 @@ from importlib import import_module
 
 from .build_dict import build
 from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
-from .utils import console, sanitize, is_libime_used, smart_rewrite
+from .logger import console
+from .utils import sanitize, is_libime_used, smart_rewrite
 
 
 def get_args(args):
