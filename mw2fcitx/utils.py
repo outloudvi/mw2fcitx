@@ -9,20 +9,20 @@ def normalize(word):
 def sanitize(obj):
     res = deepcopy(obj)
     typ = type(res)
-    if typ == type(sanitize):
+    if typ == type(sanitize):  # function
         func_name = res.__name__ or "lambda"
         return f"[func {func_name}]"
-    if typ == type({}):
+    if typ == type({}):  # object
         for i in res.keys():
             res[i] = sanitize(res[i])
-    elif typ == type([]):
+    elif typ == type([]):  # list
         fin = []
         for i in res:
             fin.append(sanitize(i))
         res = fin
-    elif typ == type(1) or typ == type("1"):
+    elif typ == type(1) or typ == type("1"):  # number
         return str(res)
-    else:
+    else:  # whatever
         return "[" + str(type(res)) + "]"
     return res
 
@@ -37,7 +37,7 @@ def smart_rewrite(config_object):
     # If `title_file_path` is not a list, make it a list
     title_file_path = config_object["source"].get("file_path")
     if isinstance(title_file_path, str):
-        config_object["source"].set('file_path', [title_file_path])
+        config_object["source"]['file_path'] = [title_file_path]
 
     return config_object
 
