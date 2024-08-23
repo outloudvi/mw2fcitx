@@ -17,8 +17,6 @@ def build(config):
         if title_file_path is None:
             logging.error("No api_path or file_path provided. Stop.")
             sys.exit(1)
-        if isinstance(title_file_path, str):
-            title_file_path = [title_file_path]
         for i in title_file_path:
             source_kwargs = config["source"].get("kwargs")
             if source_kwargs is None:
@@ -29,8 +27,6 @@ def build(config):
     pipeline.export_words(config["converter"].get("use"),
                           **config["converter"].get("kwargs"))
     generators = config["generator"]
-    if not isinstance(generators, list):
-        generators = [generators]
     for gen in generators:
         pipeline.generate_dict(gen.get("use"), **gen.get("kwargs"))
     return pipeline.dict
