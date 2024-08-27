@@ -14,6 +14,7 @@ def gen(text, **kwargs):
                        check=True)
     except FileNotFoundError:
         console.error(
-            f"The program \"{LIBIME_BIN_NAME}\" is not found. Please install libime: {LIBIME_REPOLOGY_URL}")
+            f"The program \"{LIBIME_BIN_NAME}\" is not found. Please install libime: {LIBIME_REPOLOGY_URL}"
+        )
         raise
     console.info("Dictionary generated.")

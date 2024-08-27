@@ -6,7 +6,6 @@ import sys
 from argparse import ArgumentParser
 from importlib import import_module
 
-
 from .build_dict import build
 from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
 from .logger import console
@@ -70,8 +69,7 @@ def inner_main(args):
     console.debug(f"Parsing config file: {file}")
     if objname not in dir(config_base):
         console.error(
-            f"Exports not found. Please make sure your config in in a object called '{
-                objname}'."
+            f"Exports not found. Please make sure your config in in a object called '{objname}'."
         )
         sys.exit(1)
     config_object = getattr(config_base, objname)
@@ -85,7 +83,8 @@ def inner_main(args):
     config_object = smart_rewrite(config_object)
     if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
         console.warn(
-            f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}")
+            f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}"
+        )
     build(config_object)
 
 

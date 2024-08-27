@@ -46,7 +46,8 @@ class MWFPipeline():
             "title_limit") or -1
         if not os.access(filename, os.R_OK):
             console.error(
-                f"File {filename} is not readable; remove this parameter (\"file_path\") or provide a readable file")
+                f"File {filename} is not readable; remove this parameter (\"file_path\") or provide a readable file"
+            )
             sys.exit(1)
         self.load_titles(open(filename, "r").read(), limit=limit)
 
