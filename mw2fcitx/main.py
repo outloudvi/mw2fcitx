@@ -70,7 +70,8 @@ def inner_main(args):
     console.debug(f"Parsing config file: {file}")
     if objname not in dir(config_base):
         console.error(
-            f"Exports not found. Please make sure your config in in a object called '{objname}'."
+            f"Exports not found. Please make sure your config in in a object called '{
+                objname}'."
         )
         sys.exit(1)
     config_object = getattr(config_base, objname)
@@ -89,4 +90,4 @@ def inner_main(args):
 
 
 def main():
-    inner_main(sys.argv)
+    inner_main(sys.argv[1:])
