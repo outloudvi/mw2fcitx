@@ -37,9 +37,6 @@ jobs:
           poetry env info
           poetry show
 
-      - name: Lint with yapf
-        run: poetry run yapf -i -r mw2fcitx
-
       - name: Test with pytest
         run: make test
 

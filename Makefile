@@ -8,3 +8,6 @@ build:
 
 test:
 	poetry run pytest tests/
+
+lint:
+	poetry run autopep8 --in-place mw2fcitx/**/*.py

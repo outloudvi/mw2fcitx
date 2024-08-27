@@ -39,11 +39,11 @@ pypinyin = "^0.52.0"
 python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
+autopep8 = "^2.3.1"
 coverage = "^7.6.0"
 pylint = "^3.2.5"
 pytest = "^8.3.1"
 pytest-cov = "^5.0.0"
-yapf = "^0.40.2"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
