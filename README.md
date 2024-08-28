@@ -51,7 +51,9 @@ exports = {
             # Title list export path. (optional)
             "output": "titles.txt",
             # Delay between MediaWiki API requests in seconds. (optional)
-            "request_delay": 2
+            "request_delay": 2,
+            # Results per API request; same as `aplimit` in MediaWiki docs. (optional)
+            "aplimit": "max"
         }
     },
     # Tweaks configurations as an list.

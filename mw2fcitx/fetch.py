@@ -48,13 +48,14 @@ def fetch_all_titles(api_url, **kwargs):
     titles = []
     partial_path = kwargs.get("partial")
     time_wait = float(kwargs.get("request_delay") or "2")
+    aplimit = float(kwargs.get("aplimit") or "max")
     fetch_url = api_url + "?action=query&list=allpages&format=json"
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
             fetch_url = api_url + \
-                f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={
+                f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
                     quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
@@ -74,7 +75,7 @@ def fetch_all_titles(api_url, **kwargs):
             time.sleep(time_wait)
             try:
                 apcontinue = data["continue"]["apcontinue"]
-                resp = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={
+                resp = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
                     quote_plus(apcontinue)
                 }", headers=HEADERS, retries=3).json()
             except Exception as e:
