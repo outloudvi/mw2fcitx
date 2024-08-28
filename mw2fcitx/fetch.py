@@ -1,6 +1,7 @@
 import sys
 import json
 from os import access, R_OK
+import time
 from urllib.parse import quote_plus
 import urllib3
 
@@ -46,6 +47,7 @@ def fetch_all_titles(api_url, **kwargs):
                   (f" with a limit of {limit}" if limit != -1 else ""))
     titles = []
     partial_path = kwargs.get("partial")
+    time_wait = float(kwargs.get("request_delay") or "2")
     fetch_url = api_url + "?action=query&list=allpages&format=json"
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
@@ -69,6 +71,7 @@ def fetch_all_titles(api_url, **kwargs):
         if breakNow:
             break
         if "continue" in data:
+            time.sleep(time_wait)
             try:
                 apcontinue = data["continue"]["apcontinue"]
                 resp = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={

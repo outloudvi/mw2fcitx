@@ -49,7 +49,9 @@ exports = {
             # Partial session file on exception (optional)
             "partial": "partial.json",
             # Title list export path. (optional)
-            "output": "titles.txt"
+            "output": "titles.txt",
+            # Delay between MediaWiki API requests in seconds. (optional)
+            "request_delay": 2
         }
     },
     # Tweaks configurations as an list.
