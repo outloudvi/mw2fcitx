@@ -1,45 +1,18 @@
-from http.client import HTTPException
-import json
 import sys
-from json.decoder import JSONDecodeError
-from os import access, R_OK, fdopen
-from tempfile import mkstemp
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+import json
+from os import access, R_OK
 from urllib.parse import quote_plus
+import urllib3
 
+from .version import PKG_VERSION
 from .logger import console
-from .retry import retry
 
+http = urllib3.PoolManager()
 
-class StatusError(Exception):
-
-    def __init__(self, code):
-        super().__init__(f"HTTP status is {code}")
-
-
-@retry()
-def open_request(url):
-    return urlopen(
-        Request(
-            url,
-            headers={
-                "User-Agent":
-                    "MW2Fcitx/1.0; github.com/outloudvi/fcitx5-pinyin-moegirl"
-            }))
-
-
-def fetch_as_json(url):
-    for _ in range(3):
-        try:
-            res = open_request(url)
-            if res.status == 200:
-                return json.loads(res.read())
-        except (JSONDecodeError, HTTPError) as e:
-            console.error(f"Fetch error {str(e)}, retrying")
-            continue
-    console.error(f"Error fetching URL {url}")
-    raise StatusError(res.status)
+HEADERS = {
+    "User-Agent": f"MW2Fcitx/{PKG_VERSION}; github.com/outloudvi/fcitx5-pinyin-moegirl",
+    "Accept-Encoding": "gzip, deflate"
+}
 
 
 def save_to_partial(partial_path, titles, apcontinue):
@@ -79,26 +52,12 @@ def fetch_all_titles(api_url, **kwargs):
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
             fetch_url = api_url + \
-                f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={quote_plus(apcontinue)}"
+                f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={
+                    quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
-    try:
-        data = fetch_as_json(fetch_url)
-    except (StatusError, HTTPError):
-        # It somehow cannot proceed
-        if len(titles) == 0:
-            raise Exception("Failed to retrieve any title")
-        else:
-            # Failed during fetching
-            [fd, fpath] = mkstemp(prefix="mwf-titles")
-            with fdopen(fd, 'w') as f:
-                f.write('\n'.join(titles))
-            console.error(
-                f"Fetch halted due to exceptions. Check '{fpath}' for current progress."
-            )
-            raise Exception(
-                f"Failed during fetching the titles: {len(titles)} fetched and failed at '{apcontinue}'."
-            )
+    resp = http.request("GET", fetch_url, headers=HEADERS, retries=3)
+    data = resp.json()
     breakNow = False
     while True:
         for i in map(lambda x: x["title"], data["query"]["allpages"]):
@@ -112,17 +71,14 @@ def fetch_all_titles(api_url, **kwargs):
         if "continue" in data:
             try:
                 apcontinue = data["continue"]["apcontinue"]
-                data = fetch_as_json(
-                    api_url +
-                    f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={quote_plus(apcontinue)}"
-                )
-            except (HTTPException, TimeoutError, URLError) as e:
-                console.error(str(e))
-                if partial_path:
-                    save_to_partial(partial_path, titles, apcontinue)
-                sys.exit(1)
-            except KeyboardInterrupt:
-                console.error("Keyboard interrupt received. Stopping.")
+                resp = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit=max&apcontinue={
+                    quote_plus(apcontinue)
+                }", headers=HEADERS, retries=3).json()
+            except Exception as e:
+                if isinstance(e, KeyboardInterrupt):
+                    console.error("Keyboard interrupt received. Stopping.")
+                else:
+                    console.error(str(e))
                 if partial_path:
                     save_to_partial(partial_path, titles, apcontinue)
                 sys.exit(1)
