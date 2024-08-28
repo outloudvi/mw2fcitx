@@ -50,14 +50,13 @@ def fetch_all_titles(api_url, **kwargs):
     time_wait = float(kwargs.get("request_delay", "2"))
     _aplimit = kwargs.get("aplimit", "max")
     aplimit = int(_aplimit) if _aplimit != "max" else "max"
-    fetch_url = api_url + "?action=query&list=allpages&format=json"
+    fetch_url = api_url + \
+        f"?action=query&list=allpages&aplimit={aplimit}&format=json"
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
-            fetch_url = api_url + \
-                f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
-                    quote_plus(apcontinue)}"
+            fetch_url0 += f"&apcontinue={quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
     resp = http.request("GET", fetch_url, headers=HEADERS, retries=3)
@@ -76,6 +75,7 @@ def fetch_all_titles(api_url, **kwargs):
             time.sleep(time_wait)
             try:
                 apcontinue = data["continue"]["apcontinue"]
+                console.debug(f"Continuing from {apcontinue}")
                 data = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
                     quote_plus(apcontinue)
                 }", headers=HEADERS, retries=3).json()
