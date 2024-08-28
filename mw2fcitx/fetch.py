@@ -76,7 +76,7 @@ def fetch_all_titles(api_url, **kwargs):
             time.sleep(time_wait)
             try:
                 apcontinue = data["continue"]["apcontinue"]
-                resp = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
+                data = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
                     quote_plus(apcontinue)
                 }", headers=HEADERS, retries=3).json()
             except Exception as e:
