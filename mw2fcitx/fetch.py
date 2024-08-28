@@ -47,8 +47,9 @@ def fetch_all_titles(api_url, **kwargs):
                   (f" with a limit of {limit}" if limit != -1 else ""))
     titles = []
     partial_path = kwargs.get("partial")
-    time_wait = float(kwargs.get("request_delay") or "2")
-    aplimit = float(kwargs.get("aplimit") or "max")
+    time_wait = float(kwargs.get("request_delay", "2"))
+    _aplimit = kwargs.get("aplimit", "max")
+    aplimit = int(_aplimit) if _aplimit != "max" else "max"
     fetch_url = api_url + "?action=query&list=allpages&format=json"
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
