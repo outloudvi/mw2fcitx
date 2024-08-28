@@ -1,2 +1,2 @@
 # Sync with pyproject.toml
-PKG_VERSION = "0.15.1"
+PKG_VERSION = "0.16.0"
