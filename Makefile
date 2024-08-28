@@ -11,3 +11,6 @@ test:
 
 lint:
 	poetry run autopep8 --in-place mw2fcitx/**/*.py
+
+test_version:
+	@bash scripts/test_version.sh
