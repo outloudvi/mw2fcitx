@@ -5,6 +5,11 @@ from ..logger import console
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
 
+# https://github.com/outloudvi/mw2fcitx/issues/29
+INSTINCT_PINYIN_MAPPING = {
+    "n": "en",
+    "m": "mu",
+}
 
 def manual_fix(text, table):
     if text in table:
@@ -22,6 +27,8 @@ def export(words, **kwargs):
     for line in words:
         line = line.rstrip("\n")
         pinyins = lazy_pinyin(line, errors=lambda x: DEFAULT_PLACEHOLDER)
+        if not kwargs.get("disable_instinct_pinyin") == True:
+            pinyins = [INSTINCT_PINYIN_MAPPING.get(x, x) for x in pinyins]
         if DEFAULT_PLACEHOLDER in pinyins:
             # The word is not fully converable
             continue
