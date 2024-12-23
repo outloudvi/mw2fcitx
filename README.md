@@ -66,7 +66,11 @@ exports = {
         # opencc is a built-in converter.
         # For custom converter functions, just give the function itself.
         "use": "opencc",
-        "kwargs": {}
+        "kwargs": {
+            # Replace "m" to "mu" and "n" to "en". Default: False.
+            # See more in https://github.com/outloudvi/mw2fcitx/issues/29 .
+            "disable_instinct_pinyin": False
+        }
     },
     # Generator configurations.
     "generator": [{
@@ -90,6 +94,10 @@ exports = {
 ```
 
 A sample config file is here: [`sample_config.py`](https://github.com/outloudvi/mw2fcitx/blob/master/mw2fcitx/sample_config.py)
+
+## Breaking changes across versions
+
+Read [BREAKING_CHANGES.md](./BREAKING_CHANGES.md) for details.
 
 ## License
 
