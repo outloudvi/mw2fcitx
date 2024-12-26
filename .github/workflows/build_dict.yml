@@ -14,14 +14,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref_name }}
           persist-credentials: false
           fetch-depth: "0"
           path: "toolkit"
 
       - name: Build dictionary
+        id: build-dictionary
         run: |
+          DATE=$(date +%Y%m%d)
           mkdir $GITHUB_WORKSPACE/artifacts
-          docker run -v $GITHUB_WORKSPACE/artifacts:/artifacts -v $GITHUB_WORKSPACE/toolkit:/toolkit archlinux:base-devel bash /toolkit/utils/build.sh
+          docker run -v $GITHUB_WORKSPACE/artifacts:/artifacts -v $GITHUB_WORKSPACE/toolkit:/toolkit archlinux:base-devel bash /toolkit/utils/build.sh "$DATE"
+          echo "DATE=$DATE" >> "$GITHUB_OUTPUT"
 
       - name: Checkout profile
         uses: actions/checkout@v4
@@ -34,7 +38,7 @@ jobs:
       - name: Update date
         run: |
           pushd profile
-          export DATE=`date +%Y%m%d`
+          DATE="${{ steps.build-dictionary.outputs.DATE }}"
           echo $DATE > LATEST
           cat > recipe.yaml <<EOF
           # encoding: utf-8
@@ -65,7 +69,7 @@ jobs:
       - name: Release
         shell: bash
         run: |
-          export DATE=`date +%Y%m%d`
+          DATE="${{ steps.build-dictionary.outputs.DATE }}"
           wget https://github.com/tcnksm/ghr/releases/download/v0.15.0/ghr_v0.15.0_linux_amd64.tar.gz -O ghr.tgz
           tar xzf ghr.tgz
           pushd profile
