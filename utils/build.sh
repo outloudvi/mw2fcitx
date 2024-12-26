@@ -12,6 +12,7 @@ mw2fcitx -c utils/moegirl_dict.py
 useradd archbuild
 chmod -R a+rwx .
 export DATE=$(date +%Y%m%d)
+sed -i "s/0.0.1/$DATE/" utils/moegirl_dict.py
 su archbuild utils/makepkg.sh
 
 cp fcitx5-pinyin-moegirl* /artifacts
