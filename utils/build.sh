@@ -11,7 +11,7 @@ mw2fcitx -c utils/moegirl_dict.py
 
 useradd archbuild
 chmod -R a+rwx .
-DATE=${1:-$(date +%Y%m%d)}
+export DATE=${1:-$(date +%Y%m%d)} # makepkg.sh also uses the variable
 sed -i "s/0.0.1/$DATE/" utils/moegirl_dict.py
 su archbuild utils/makepkg.sh
 
