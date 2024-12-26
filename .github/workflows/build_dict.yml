@@ -36,7 +36,20 @@ jobs:
           pushd profile
           export DATE=`date +%Y%m%d`
           echo $DATE > LATEST
+          cat > recipe.yaml <<EOF
+          # encoding: utf-8
+          ---
+          recipe:
+            Rx: moegirl-dict
+            description: >-
+              Install moegirl dict from fcitx5-pinyin-moegirl
+          download_files: >-
+            moegirl.dict.yaml::https://github.com/outloudvi/mw2fcitx/releases/download/$DATE/moegirl.dict.yaml
+          install_files: >-
+            moegirl.dict.yaml
+          EOF
           git add ./LATEST
+          git add ./recipe.yaml
           git config --local user.email "noreply@example.com"
           git config --local user.name "GitHub Actions"
           git commit -m "chore: version $DATE"
