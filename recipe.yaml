@@ -1,0 +1,10 @@
+# encoding: utf-8
+---
+recipe:
+  Rx: moegirl-dict
+  description: >-
+    Install moegirl dict from fcitx5-pinyin-moegirl
+download_files: >-
+  moegirl.dict.yaml::https://github.com/outloudvi/mw2fcitx/releases/download/20241211/moegirl.dict.yaml
+install_files: >-
+  moegirl.dict.yaml
