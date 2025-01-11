@@ -53,8 +53,8 @@ class MWFPipeline():
                 "remove this parameter (\"file_path\") or provide a readable file"
             )
             sys.exit(1)
-        with open(filename, "r", encoding="utf-8").read() as fp:
-            self.load_titles(fp, limit=limit)
+        with open(filename, "r", encoding="utf-8") as fp:
+            self.load_titles(fp.read(), limit=limit)
 
     def fetch_titles(self, **kwargs):
         titles = fetch_all_titles(self.api_path, **kwargs)
