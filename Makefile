@@ -10,6 +10,9 @@ test:
 	poetry run pytest tests/
 
 lint:
+	poetry run pylint **/*.py
+
+format:
 	poetry run autopep8 --in-place mw2fcitx/**/*.py
 
 test_version:
