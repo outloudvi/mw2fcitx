@@ -5,16 +5,24 @@ name: Tests
 
 on:
   push:
-    branches: ['master']
+    branches: ["master"]
   pull_request:
-    branches: ['master']
+    branches: ["master"]
 
 permissions:
   contents: read
   id-token: write
 
 jobs:
-  build:
+  buildtest:
+    strategy:
+      matrix:
+        pyversion:
+          - "3.9"
+          - "3.10" # YAML trick: add "" especially between 3.10
+          - "3.11"
+          - "3.12"
+          - "3.13"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -25,11 +33,11 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry
 
-      - name: Set up Python 3.12
+      - name: Set up Python ${{ matrix.pyversion }}
         uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
-          python-version: '3.12'
-          cache: 'poetry'
+          python-version: ${{ matrix.pyversion }}
+          cache: "poetry"
 
       - name: Install dependencies
         run: |
