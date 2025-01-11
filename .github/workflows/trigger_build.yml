@@ -1,16 +1,16 @@
-name: '[moegirl] Trigger Automatic Dictionary Build'
+name: "[moegirl] Trigger Automatic Dictionary Build"
 
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: '37 20 14 * *'
+    - cron: "37 20 14 * *"
 
 jobs:
   trigger-bnp:
     name: Trigger build & publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             github.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
