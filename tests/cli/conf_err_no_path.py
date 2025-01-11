@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 from mw2fcitx.tweaks.moegirl import tweaks
 
 exports = {

@@ -1,7 +1,7 @@
-import logging
 import sys
 
 from .pipeline import MWFPipeline
+from .logger import console
 
 
 def build(config):
@@ -20,11 +20,11 @@ def build(config):
         for i in title_file_path:
             source_kwargs = config["source"].get("kwargs")
             if source_kwargs is None:
-                logging.warn("source.kwargs does not exist; assuming null")
+                console.warning("source.kwargs does not exist; assuming null")
                 source_kwargs = {}
             pipeline.load_titles_from_file(i, **source_kwargs)
     if not has_contents:
-        logging.error("No api_path or file_path provided. Stop.")
+        console.error("No api_path or file_path provided. Stop.")
         sys.exit(1)
     pipeline.convert_to_words(config["tweaks"])
     pipeline.export_words(config["converter"].get("use"),

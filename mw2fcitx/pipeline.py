@@ -9,6 +9,9 @@ from .logger import console
 
 
 class MWFPipeline():
+    """
+    A pipeline for converting title lists to dictionaries.
+    """
 
     def __init__(self, api_path=""):
         self.api_path = api_path
@@ -31,7 +34,7 @@ class MWFPipeline():
 
     def write_titles_to_file(self, filename):
         try:
-            with open(filename, "w") as file:
+            with open(filename, "w", encoding="utf-8") as file:
                 file.write("\n".join(self.titles))
         except Exception as e:
             console.error(f"File {filename} is not writable: {str(e)}")
@@ -46,10 +49,12 @@ class MWFPipeline():
             "title_limit") or -1
         if not os.access(filename, os.R_OK):
             console.error(
-                f"File {filename} is not readable; remove this parameter (\"file_path\") or provide a readable file"
+                f"File {filename} is not readable; "
+                "remove this parameter (\"file_path\") or provide a readable file"
             )
             sys.exit(1)
-        self.load_titles(open(filename, "r").read(), limit=limit)
+        with open(filename, "r", encoding="utf-8").read() as fp:
+            self.load_titles(fp, limit=limit)
 
     def fetch_titles(self, **kwargs):
         titles = fetch_all_titles(self.api_path, **kwargs)

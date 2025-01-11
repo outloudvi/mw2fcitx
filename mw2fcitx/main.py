@@ -82,8 +82,13 @@ def inner_main(args):
         json.dumps(displayable_config_object, indent=2, sort_keys=True))
     config_object = smart_rewrite(config_object)
     if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
-        console.warn(
-            f"You are trying to generate fcitx dictionary, while {LIBIME_BIN_NAME} doesn't seem to exist. This might cause issues. Please install libime: {LIBIME_REPOLOGY_URL}"
+        console.warning(
+            f"You are trying to generate fcitx dictionary, "
+            f"while {LIBIME_BIN_NAME} doesn't seem to exist."
+        )
+        console.warning(
+            f"This might cause issues. "
+            f"Please install libime: {LIBIME_REPOLOGY_URL}"
         )
     build(config_object)
 

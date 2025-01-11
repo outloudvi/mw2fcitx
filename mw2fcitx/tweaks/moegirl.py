@@ -71,8 +71,10 @@ def tweak_trim_suffix(suffixes):
 
 
 def tweak_remove_regex(regexes):
-    from re import compile
-    compiled_regexes = list(map(compile, regexes))
+    # Don't introduce extra import in public configuration files
+    # pylint: disable=import-outside-toplevel
+    from re import compile as regex_compile
+    compiled_regexes = list(map(regex_compile, regexes))
 
     def cb(items: List[str]):
         ret = items

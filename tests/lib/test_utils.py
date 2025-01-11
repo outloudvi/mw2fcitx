@@ -3,7 +3,7 @@ from mw2fcitx.utils import is_libime_used, sanitize, smart_rewrite
 
 def test_is_libime_used():
     assert (
-        is_libime_used({}) == False
+        is_libime_used({}) is False
     )
 
     assert (
@@ -14,7 +14,7 @@ def test_is_libime_used():
                     "output": "1.yml"
                 }
             }]
-        }) == False
+        }) is False
     )
 
     assert (
@@ -30,7 +30,7 @@ def test_is_libime_used():
                     "output": "1.dict"
                 }
             }]
-        }) == True
+        }) is True
     )
 
 
@@ -41,7 +41,7 @@ def test_sanitize():
         sanitize(test) == "[func test]"
     )
 
-    assert (sanitize(lambda x: x) == "[func <lambda>]")
+    assert sanitize(lambda x: x) == "[func <lambda>]"
 
     assert (sanitize({
         "a": [1, "b"],

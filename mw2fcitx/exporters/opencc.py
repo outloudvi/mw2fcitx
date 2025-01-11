@@ -11,6 +11,7 @@ INSTINCT_PINYIN_MAPPING = {
     "m": "mu",
 }
 
+
 def manual_fix(text, table):
     if text in table:
         return table[text]
@@ -22,12 +23,13 @@ def export(words, **kwargs):
     converter = opencc.OpenCC('t2s.json')
     fixfile = kwargs.get("fixfile")
     if fixfile is not None:
-        table = json.load(open(fixfile, "r", encoding="utf-8"))
+        with open(fixfile, "r", encoding="utf-8") as fp:
+            table = json.load(fp)
     count = 0
     for line in words:
         line = line.rstrip("\n")
         pinyins = lazy_pinyin(line, errors=lambda x: DEFAULT_PLACEHOLDER)
-        if not kwargs.get("disable_instinct_pinyin") == True:
+        if not kwargs.get("disable_instinct_pinyin") is True:
             pinyins = [INSTINCT_PINYIN_MAPPING.get(x, x) for x in pinyins]
         if DEFAULT_PLACEHOLDER in pinyins:
             # The word is not fully converable
