@@ -56,7 +56,7 @@ def fetch_all_titles(api_url, **kwargs):
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
-            fetch_url0 += f"&apcontinue={quote_plus(apcontinue)}"
+            fetch_url += f"&apcontinue={quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
     resp = http.request("GET", fetch_url, headers=HEADERS, retries=3)
