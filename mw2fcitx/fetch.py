@@ -76,9 +76,8 @@ def fetch_all_titles(api_url, **kwargs):
             try:
                 apcontinue = data["continue"]["apcontinue"]
                 console.debug(f"Continuing from {apcontinue}")
-                data = http.request("GET", api_url + f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={
-                    quote_plus(apcontinue)
-                }", headers=HEADERS, retries=3).json()
+                data = http.request("GET", api_url +
+                                    f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={quote_plus(apcontinue)}", headers=HEADERS, retries=3).json()
             except Exception as e:
                 if isinstance(e, KeyboardInterrupt):
                     console.error("Keyboard interrupt received. Stopping.")
