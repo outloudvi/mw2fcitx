@@ -1,6 +1,7 @@
 import time
-from mw2fcitx.main import inner_main
 import pytest
+
+from mw2fcitx.main import inner_main
 
 
 def test_inner_main_name_without_py():
@@ -17,14 +18,14 @@ def test_single_generator():
 
 def test_local():
     inner_main(['-c', 'tests/cli/conf_local'])
-    with open("test_local_result.dict.yml", "r") as f:
-        assert (f.read() == """---
+    with open("test_local_result.dict.yml", "r", encoding="utf-8") as f:
+        assert f.read() == """---
 name: e2etest_local
 version: "0.1"
 sort: by_weight
 ...
 初音未来	chu yin wei lai
-""")
+"""
 
 
 def test_continue():
@@ -32,7 +33,7 @@ def test_continue():
     start = time.perf_counter()
     inner_main(['-c', 'tests/cli/conf_continue'])
     end = time.perf_counter()
-    assert (end-start > 8)
+    assert end-start > 8
 
 
 def test_err_no_path():

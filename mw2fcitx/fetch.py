@@ -28,13 +28,14 @@ def save_to_partial(partial_path, titles, apcontinue):
 
 def resume_from_partial(partial_path):
     if not access(partial_path, R_OK):
-        console.warn(f"Cannot read partial session: {partial_path}")
+        console.warning(f"Cannot read partial session: {partial_path}")
         return [[], None]
     try:
-        partial_data = json.load(open(partial_path, "r", encoding="utf-8"))
-        titles = partial_data.get("titles", [])
-        apcontinue = partial_data.get("apcontinue", None)
-        return [titles, apcontinue]
+        with open(partial_path, "r", encoding="utf-8") as fp:
+            partial_data = json.load(fp)
+            titles = partial_data.get("titles", [])
+            apcontinue = partial_data.get("apcontinue", None)
+            return [titles, apcontinue]
     except Exception as e:
         console.error(str(e))
         console.error("Failed to parse partial session")
@@ -61,15 +62,15 @@ def fetch_all_titles(api_url, **kwargs):
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
     resp = http.request("GET", fetch_url, headers=HEADERS, retries=3)
     data = resp.json()
-    breakNow = False
+    break_now = False
     while True:
         for i in map(lambda x: x["title"], data["query"]["allpages"]):
             titles.append(i)
             if limit != -1 and len(titles) >= limit:
-                breakNow = True
+                break_now = True
                 break
         console.debug(f"Got {len(titles)} pages")
-        if breakNow:
+        if break_now:
             break
         if "continue" in data:
             time.sleep(time_wait)
@@ -77,7 +78,11 @@ def fetch_all_titles(api_url, **kwargs):
                 apcontinue = data["continue"]["apcontinue"]
                 console.debug(f"Continuing from {apcontinue}")
                 data = http.request("GET", api_url +
-                                    f"?action=query&list=allpages&format=json&aplimit={aplimit}&apcontinue={quote_plus(apcontinue)}", headers=HEADERS, retries=3).json()
+                                    f"?action=query&list=allpages&format=json"
+                                    f"&aplimit={aplimit}"
+                                    f"&apcontinue={quote_plus(apcontinue)}",
+                                    headers=HEADERS,
+                                    retries=3).json()
             except Exception as e:
                 if isinstance(e, KeyboardInterrupt):
                     console.error("Keyboard interrupt received. Stopping.")
