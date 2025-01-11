@@ -48,6 +48,9 @@ jobs:
       - name: Test with pytest
         run: make test
 
+      - name: Run pylint
+        run: make lint
+
       - name: Test version mark
         run: make test_version
 
