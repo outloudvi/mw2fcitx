@@ -21,10 +21,7 @@ def manual_fix(text, table):
 def export(words, **kwargs):
     result = ""
     converter = opencc.OpenCC('t2s.json')
-    fixfile = kwargs.get("fixfile")
-    if fixfile is not None:
-        with open(fixfile, "r", encoding="utf-8") as fp:
-            table = json.load(fp)
+    fix_table = kwargs.get("fix_table")
     count = 0
     for line in words:
         line = line.rstrip("\n")
@@ -39,8 +36,8 @@ def export(words, **kwargs):
             # print("Failed to convert, ignoring:", pinyin, file=sys.stderr)
             continue
 
-        if fixfile is not None:
-            fixed_pinyin = manual_fix(line, table)
+        if fix_table is not None:
+            fixed_pinyin = manual_fix(line, fix_table)
             if fixed_pinyin is not None:
                 pinyin = fixed_pinyin
                 console.debug(f"Fixing {line} to {pinyin}")

@@ -69,7 +69,10 @@ exports = {
         "kwargs": {
             # Replace "m" to "mu" and "n" to "en". Default: False.
             # See more in https://github.com/outloudvi/mw2fcitx/issues/29 .
-            "disable_instinct_pinyin": False
+            "disable_instinct_pinyin": False,
+            # Pinyin results to replace. (optional)
+            # Format: { "汉字": "pin'yin" }
+            "fixfile": "fixfile.json"
         }
     },
     # Generator configurations.
