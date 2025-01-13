@@ -1,5 +1,6 @@
 # pylint: disable=import-outside-toplevel
 
+import json
 import os
 import sys
 
@@ -85,6 +86,10 @@ class MWFPipeline():
         if converter == "opencc":
             console.debug(f"Exporting {len(self.words)} words with OpenCC")
             from mw2fcitx.exporters.opencc import export
+            fixfile_path = kwargs.get('fixfile')
+            if fixfile_path is not None:
+                with open(fixfile_path, "r", encoding="utf-8") as fp:
+                    kwargs["fix_table"] = json.load(fp)
             self.exports = export(self.words, **kwargs)
         elif callable(converter):
             console.debug(
