@@ -1,3 +1,10 @@
+> [!NOTE]
+> 如果您需要下载**萌娘百科 (zh.moegirl.org.cn) 词库**，请参见[此页]((https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl))。
+>
+> For the **pre-built dictionary for Moegirlpedia** (zh.moegirl.org.cn), see [the wiki](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl).
+
+---
+
 # mw2fcitx
 
 Build fcitx5/RIME dictionaries from MediaWiki sites.
@@ -13,8 +20,6 @@ pip install mw2fcitx --user
 # or if you want to just run it (needs Pipx)
 pipx run mw2fcitx
 ```
-
-For the pre-built moegirl dictionary info, see [the wiki](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl).
 
 ## CLI Usage
 
