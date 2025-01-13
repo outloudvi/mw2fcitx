@@ -1,7 +1,7 @@
 > [!NOTE]
-> 如果您需要下载**萌娘百科 (zh.moegirl.org.cn) 词库**，请参见[此页]((https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl))。
+> 如果您需要下载**萌娘百科 (zh.moegirl.org.cn) 词库**，请[参见此页](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl)。
 >
-> For the **pre-built dictionary for Moegirlpedia** (zh.moegirl.org.cn), see [the wiki](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl).
+> For the **pre-built dictionary for Moegirlpedia** (zh.moegirl.org.cn), see [the wiki](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl#extra-dictionaries).
 
 ---
 
