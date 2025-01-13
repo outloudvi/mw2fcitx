@@ -6,7 +6,7 @@ pushd /toolkit
 pacman -Syu --noconfirm libime python-pip python-virtualenv
 virtualenv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install mw2fcitx
 mw2fcitx -c utils/moegirl_dict.py
 
 useradd archbuild
