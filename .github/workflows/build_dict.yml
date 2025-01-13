@@ -1,9 +1,10 @@
 name: Build dictionary
 
 on:
-  push:
-    branches:
-      - pkg-moegirl
+  # Automatic build paused - see #13
+  # push:
+  #   branches:
+  #     - pkg-moegirl
   workflow_dispatch: {}
 
 jobs:
