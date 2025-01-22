@@ -73,7 +73,7 @@ jobs:
           DATE="${{ steps.build-dictionary.outputs.DATE }}"
           wget https://github.com/tcnksm/ghr/releases/download/v0.15.0/ghr_v0.15.0_linux_amd64.tar.gz -O ghr.tgz
           tar xzf ghr.tgz
-          pushd profile
+          pushd toolkit
           export COMMIT=$(git rev-parse HEAD)
           popd
           ghr_v0.15.0_linux_amd64/ghr -t ${{ secrets.GITHUB_TOKEN }} -u ${GITHUB_REPOSITORY/\/*/} -r ${GITHUB_REPOSITORY/*\//} -c "$COMMIT" -delete ${DATE} ./artifacts/
