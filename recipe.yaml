@@ -5,6 +5,6 @@ recipe:
   description: >-
     Install moegirl dict from fcitx5-pinyin-moegirl
 download_files: >-
-  moegirl.dict.yaml::https://github.com/outloudvi/mw2fcitx/releases/download/20250113/moegirl.dict.yaml
+  moegirl.dict.yaml::https://github.com/outloudvi/mw2fcitx/releases/download/20250209/moegirl.dict.yaml
 install_files: >-
   moegirl.dict.yaml
