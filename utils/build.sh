@@ -3,10 +3,11 @@ set -euo pipefail
 
 pushd /toolkit
 
-pacman -Syu --noconfirm libime python-pip python-virtualenv
-virtualenv venv
-source venv/bin/activate
-pip install mw2fcitx
+pacman -Syu --noconfirm libime uv
+uv python install 3.12
+uv venv --python 3.12
+source .venv/bin/activate
+uv pip install mw2fcitx
 mw2fcitx -c utils/moegirl_dict.py
 
 useradd archbuild
