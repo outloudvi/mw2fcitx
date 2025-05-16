@@ -55,6 +55,6 @@ jobs:
         run: make test_version
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
         with:
-          use_oidc: true
+          token: ${{ secrets.CODECOV_REPO_TOKEN }}
