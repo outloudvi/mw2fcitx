@@ -49,3 +49,15 @@ def test_api_params():
 专题关注	zhuan ti guan zhu
 全域动态	quan yu dong tai
 本地社群新闻	ben di she qun xin wen"""
+
+
+def test_api_title_limit():
+    inner_main(['-c', 'tests/cli/conf_api_title_limit'])
+    with open("test_api_title_limit.titles.txt", "r", encoding="utf-8") as f:
+        assert len(f.read().split("\n")) == 25
+
+
+def test_list_categorymembers():
+    inner_main(['-c', 'tests/cli/conf_list_categorymembers'])
+    with open("test_list_categorymembers.titles.txt", "r", encoding="utf-8") as f:
+        assert len(f.read().split("\n")) == 10
