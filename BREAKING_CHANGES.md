@@ -1,5 +1,9 @@
 ## Breaking Changes
 
+### 0.20.0
+
+* BREAKING: Like what `file_title_limit` is already doing, `api_title_limit` now also works to trim the title count to the exact limit number.
+
 ### 0.19.0
 
 * BREAKING: `source.kwargs.aplimit` is moved to `source.kwargs.api_params.aplimit`.
