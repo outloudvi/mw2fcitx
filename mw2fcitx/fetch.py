@@ -127,17 +127,14 @@ def fetch_all_titles_inner(
     time_wait: float
 ) -> List[str]:
     data = initial_data
-    break_now = False
 
     while True:
-        for i in map(lambda x: x["title"], data["query"]["allpages"]):
-            titles.append(i)
-            if title_limit != -1 and len(titles) >= title_limit:
-                break_now = True
-                break
-        console.debug(f"Got {len(titles)} pages")
-        if break_now:
+        for (_, item_value) in data["query"].items():
+            titles += list(map(lambda x: x["title"], item_value))
+        if title_limit != -1 and len(titles) >= title_limit:
+            titles = titles[:title_limit]
             break
+        console.debug(f"Got {len(titles)} pages")
         if "continue" in data:
             time.sleep(time_wait)
             try:
