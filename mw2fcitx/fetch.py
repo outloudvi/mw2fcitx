@@ -2,7 +2,7 @@ import sys
 import json
 from os import access, R_OK
 import time
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlencode
 import urllib3
 
 from .version import PKG_VERSION
@@ -49,18 +49,28 @@ def fetch_all_titles(api_url, **kwargs):
     titles = []
     partial_path = kwargs.get("partial")
     time_wait = float(kwargs.get("request_delay", "2"))
+    if kwargs.get("aplimit") is not None:
+        console.warning(
+            f"Warn: `source.kwargs.aplimit` is deprecated - please use `source.kwargs.api_param.aplimit` instead.")
     _aplimit = kwargs.get("aplimit", "max")
     aplimit = int(_aplimit) if _aplimit != "max" else "max"
-    fetch_url = api_url + \
-        f"?action=query&list=allpages&aplimit={aplimit}&format=json"
+    api_params = kwargs.get("api_params", {})
+    if "aplimit" not in api_params:
+        api_params["aplimit"] = aplimit
+    api_params["action"] = "query"
+    api_params["list"] = "allpages"
+    api_params["format"] = "json"
+    encoded_querystring = urlencode(api_params)
+    base_fetch_url = f"{api_url}?{encoded_querystring}"
+    first_fetch_url = base_fetch_url
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, apcontinue] = resume_from_partial(partial_path)
         if apcontinue is not None:
-            fetch_url += f"&apcontinue={quote_plus(apcontinue)}"
+            first_fetch_url += f"&apcontinue={quote_plus(apcontinue)}"
             console.info(
                 f"{len(titles)} titles found. Continuing from {apcontinue}")
-    resp = http.request("GET", fetch_url, headers=HEADERS, retries=3)
+    resp = http.request("GET", first_fetch_url, headers=HEADERS, retries=3)
     data = resp.json()
     break_now = False
     while True:
@@ -77,10 +87,7 @@ def fetch_all_titles(api_url, **kwargs):
             try:
                 apcontinue = data["continue"]["apcontinue"]
                 console.debug(f"Continuing from {apcontinue}")
-                data = http.request("GET", api_url +
-                                    f"?action=query&list=allpages&format=json"
-                                    f"&aplimit={aplimit}"
-                                    f"&apcontinue={quote_plus(apcontinue)}",
+                data = http.request("GET", base_fetch_url + f"&apcontinue={quote_plus(apcontinue)}",
                                     headers=HEADERS,
                                     retries=3).json()
             except Exception as e:
