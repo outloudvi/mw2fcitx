@@ -129,6 +129,10 @@ def fetch_all_titles_inner(
     data = initial_data
 
     while True:
+        if "error" in data:
+            console.error(
+                f"MediaWiki API error: [code: {data["error"].get("code", "?")}] {data["error"].get("info", str(data["error"]))}"
+            )
         for (_, item_value) in data["query"].items():
             titles += list(map(lambda x: x["title"], item_value))
         if title_limit != -1 and len(titles) >= title_limit:
