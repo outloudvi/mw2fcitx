@@ -58,6 +58,10 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     _aplimit = kwargs.get("aplimit", "max")
     aplimit = int(_aplimit) if _aplimit != "max" else "max"
     api_params = kwargs.get("api_params", {})
+    if type(api_params) != dict:
+        console.error(
+            f"Type of `api_params` is not dict or None, but {type(api_params)}")
+        sys.exit(1)
     if "aplimit" not in api_params:
         api_params["aplimit"] = aplimit
     api_params["action"] = "query"
