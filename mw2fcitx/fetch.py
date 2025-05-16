@@ -43,6 +43,16 @@ def resume_from_partial(partial_path: str):
         return [[], None]
 
 
+def warn_unsafe_api_params(params: dict, param_names: List[str]):
+    for i in param_names:
+        if i in params:
+            console.warning(
+                f"I'm seeing `{i}` in `api_params`. "
+                "Usually this parameter should not be changed. "
+                "Make sure you know what you're doing."
+            )
+
+
 def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     title_limit = kwargs.get(
         "api_title_limit") or kwargs.get("title_limit") or -1
@@ -51,22 +61,31 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     titles = []
     partial_path = kwargs.get("partial")
     time_wait = float(kwargs.get("request_delay", "2"))
+    _aplimit = kwargs.get("aplimit", "max")
+    aplimit = int(_aplimit) if _aplimit != "max" else "max"
+    custom_api_params = kwargs.get("api_params", {})
+    if type(custom_api_params) != dict:
+        console.error(
+            f"Type of `api_params` is not dict or None, but {type(custom_api_params)}")
+        sys.exit(1)
+
+    # Deprecated
     if kwargs.get("aplimit") is not None:
         console.warning(
             "Warn: `source.kwargs.aplimit` is deprecated - "
             "please use `source.kwargs.api_param.aplimit` instead.")
-    _aplimit = kwargs.get("aplimit", "max")
-    aplimit = int(_aplimit) if _aplimit != "max" else "max"
-    api_params = kwargs.get("api_params", {})
-    if type(api_params) != dict:
-        console.error(
-            f"Type of `api_params` is not dict or None, but {type(api_params)}")
-        sys.exit(1)
-    if "aplimit" not in api_params:
-        api_params["aplimit"] = aplimit
-    api_params["action"] = "query"
-    api_params["list"] = "allpages"
-    api_params["format"] = "json"
+    if "aplimit" not in custom_api_params:
+        custom_api_params["aplimit"] = aplimit
+
+    api_params = {
+        # default params
+        "aplimit": "max",
+        "action": "query",
+        "list": "allpages",
+        "format": "json"
+    }
+    warn_unsafe_api_params(custom_api_params, ["action", "format"])
+    api_params.update(custom_api_params)
     base_fetch_url = f"{api_url}?{urlencode(api_params)}"
     first_fetch_url = base_fetch_url
     if partial_path is not None:
