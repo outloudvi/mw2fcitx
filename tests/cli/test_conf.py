@@ -39,3 +39,13 @@ def test_continue():
 def test_err_no_path():
     with pytest.raises(SystemExit):
         inner_main(['-c', 'tests/cli/conf_err_no_path'])
+
+
+def test_api_params():
+    inner_main(['-c', 'tests/cli/conf_api_params'])
+    with open("test_api_params.dict.yml", "r", encoding="utf-8") as f:
+        assert "\n".join(sorted(f.read().split("\n")[4:])) == """
+...
+专题关注	zhuan ti guan zhu
+全域动态	quan yu dong tai
+本地社群新闻	ben di she qun xin wen"""
