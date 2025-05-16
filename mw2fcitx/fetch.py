@@ -3,8 +3,10 @@ import json
 from os import access, R_OK
 import time
 from typing import Any, List, Union
-from urllib.parse import quote_plus, urlencode
+from urllib.parse import urlencode
 import urllib3
+
+from .const import PARTIAL_CONTINUE_DICT, PARTIAL_DEPRECATED_APCONTINUE, PARTIAL_TITLES
 
 from .version import PKG_VERSION
 from .logger import console
@@ -17,8 +19,8 @@ HEADERS = {
 }
 
 
-def save_to_partial(partial_path: str, titles: List[str], apcontinue: str):
-    ret = {"apcontinue": apcontinue, "titles": titles}
+def save_to_partial(partial_path: str, titles: List[str], continue_dict: dict):
+    ret = {PARTIAL_CONTINUE_DICT: continue_dict, PARTIAL_TITLES: titles}
     try:
         with open(partial_path, "w", encoding="utf-8") as fp:
             fp.write(json.dumps(ret, ensure_ascii=False))
@@ -27,16 +29,22 @@ def save_to_partial(partial_path: str, titles: List[str], apcontinue: str):
         console.error(str(e))
 
 
-def resume_from_partial(partial_path: str):
+def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
     if not access(partial_path, R_OK):
         console.warning(f"Cannot read partial session: {partial_path}")
         return [[], None]
     try:
         with open(partial_path, "r", encoding="utf-8") as fp:
             partial_data = json.load(fp)
-            titles = partial_data.get("titles", [])
-            apcontinue = partial_data.get("apcontinue", None)
-            return [titles, apcontinue]
+            titles = partial_data.get(PARTIAL_TITLES, [])
+            deprecated_apcontinue = partial_data.get(
+                PARTIAL_DEPRECATED_APCONTINUE, None)
+            continue_dict = partial_data.get(PARTIAL_CONTINUE_DICT, None)
+            if continue_dict is None and deprecated_apcontinue is not None:
+                continue_dict = {
+                    "apcontinue": deprecated_apcontinue
+                }
+            return (titles, continue_dict)
     except Exception as e:
         console.error(str(e))
         console.error("Failed to parse partial session")
@@ -90,11 +98,11 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     first_fetch_url = base_fetch_url
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
-        [titles, apcontinue] = resume_from_partial(partial_path)
-        if apcontinue is not None:
-            first_fetch_url += f"&apcontinue={quote_plus(apcontinue)}"
+        [titles, continue_dict] = resume_from_partial(partial_path)
+        if continue_dict is not None:
+            first_fetch_url += f"&{urlencode(continue_dict)}"
             console.info(
-                f"{len(titles)} titles found. Continuing from {apcontinue}")
+                f"{len(titles)} titles found. Continuing from {continue_dict}")
     resp = http.request("GET", first_fetch_url, headers=HEADERS, retries=3)
     initial_data = resp.json()
     titles = fetch_all_titles_inner(
@@ -133,9 +141,9 @@ def fetch_all_titles_inner(
         if "continue" in data:
             time.sleep(time_wait)
             try:
-                apcontinue = data["continue"]["apcontinue"]
-                console.debug(f"Continuing from {apcontinue}")
-                data = http.request("GET", base_fetch_url + f"&apcontinue={quote_plus(apcontinue)}",
+                continue_dict = data["continue"]
+                console.debug(f"Continuing from {continue_dict}")
+                data = http.request("GET", base_fetch_url + f"&{urlencode(continue_dict)}",
                                     headers=HEADERS,
                                     retries=3).json()
             except Exception as e:
@@ -144,7 +152,7 @@ def fetch_all_titles_inner(
                 else:
                     console.error(str(e))
                 if partial_path:
-                    save_to_partial(partial_path, titles, apcontinue)
+                    save_to_partial(partial_path, titles, continue_dict)
                 sys.exit(1)
         else:
             break
