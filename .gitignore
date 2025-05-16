@@ -141,5 +141,5 @@ cython_debug/
 *.dict
 *.dict.yaml
 *.dict.yml
-titles.txt
+*titles.txt
 /.vscode
