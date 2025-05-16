@@ -5,10 +5,10 @@ exports = {
     "source": {
         "api_path": "https://zh.wikipedia.org/w/api.php",
         "kwargs": {
-            "request_delay": 2,
-            "title_limit": 5,  # to test the paginator
+            "title_limit": 20,
             "api_params": {
-                "aplimit": 1,
+                "apnamespace": 4,
+                "apprefix": "《求闻》/2019年第1卷"
             },
             "output": "titles.txt"
         }
@@ -22,12 +22,8 @@ exports = {
     "generator": [{
         "use": "rime",
         "kwargs": {
-            "output": "moegirl.dict.yml"
-        }
-    }, {
-        "use": "pinyin",
-        "kwargs": {
-            "output": "moegirl.dict"
+            "name": "e2etest_local",
+            "output": "test_api_params.dict.yml"
         }
     }]
 }
