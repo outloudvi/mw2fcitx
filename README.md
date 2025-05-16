@@ -57,8 +57,13 @@ exports = {
             "output": "titles.txt",
             # Delay between MediaWiki API requests in seconds. (optional)
             "request_delay": 2,
-            # Results per API request; same as `aplimit` in MediaWiki docs. (optional)
-            "aplimit": "max"
+            # Deprecated. Please use `source.kwargs.api_params.aplimit` instead. (optional)
+            "aplimit": "max",
+            # Override ALL parameters while calling MediaWiki API.
+            "api_params": {
+                # Results per API request; same as `aplimit` in MediaWiki docs. (optional)
+                "aplimit": "max"
+            }
         }
     },
     # Tweaks configurations as an list.
