@@ -1,0 +1,2 @@
+ignore:
+  - mw2fcitx/exports/opencc.py # deprecated
