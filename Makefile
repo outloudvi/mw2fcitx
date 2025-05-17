@@ -7,7 +7,10 @@ build:
 	poetry build
 
 test:
-	poetry run pytest tests/
+	poetry run pytest tests/ --ignore=tests/opencc
+
+test_opencc:
+	poetry run pytest tests/opencc
 
 lint:
 	poetry run pylint **/*.py
