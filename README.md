@@ -3,6 +3,9 @@
 >
 > For the **pre-built dictionary for Moegirlpedia** (zh.moegirl.org.cn), see [the wiki](https://github.com/outloudvi/mw2fcitx/wiki/fcitx5-pinyin-moegirl#extra-dictionaries).
 
+> [!WARNING]
+> `mw2fcitx` 0.20.0 包含一些主要和繁简转换相关的 breaking changes。请查看 [BREAKING_CHANGES.md](./BREAKING_CHANGES.md) 了解更多信息。
+
 ---
 
 # mw2fcitx
@@ -19,6 +22,8 @@ pip install mw2fcitx
 pip install mw2fcitx --user
 # or if you want to just run it (needs Pipx)
 pipx run mw2fcitx
+# or if you need to use OpenCC for text conversion
+pip install mw2fcitx[opencc]
 ```
 
 ## CLI Usage
@@ -30,6 +35,7 @@ mw2fcitx -c config_script.py
 ## Configuration Script Format
 
 ```python
+from mw2fcitx.tweaks.moegirl import tweaks
 # By default we assume the configuration is located at a variable
 #     called "exports".
 # You can change this with `-n any_name` in the CLI.
@@ -73,7 +79,7 @@ exports = {
         tweaks,
     # Converter configurations.
     "converter": {
-        # opencc is a built-in converter.
+        # pypinyin is a built-in converter.
         # For custom converter functions, just give the function itself.
         "use": "pypinyin",
         "kwargs": {
