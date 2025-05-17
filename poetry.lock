@@ -204,7 +204,7 @@ version = "1.1.9"
 description = "Conversion between Traditional and Simplified Chinese"
 optional = false
 python-versions = "*"
-groups = ["main"]
+groups = ["opencc"]
 files = [
     {file = "OpenCC-1.1.9-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:a33941dd4cb67457e6f44dfe36dddc30a602363a4f6a29b41d79b062b332c094"},
     {file = "OpenCC-1.1.9-cp310-cp310-manylinux2014_x86_64.whl", hash = "sha256:92769f9a60301574c73096f9ab8a9060fe0d13a9f8266735d82a2a3a92adbd26"},
@@ -455,4 +455,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "fd2afa31765560944a71b712a30970acb752c1907dc23b35d6f8595825d7b529"
+content-hash = "b30a3d90017f18f9ca3ba8555b7e0c0c0f7441d1e333b93d489bcec9672d6ab6"
