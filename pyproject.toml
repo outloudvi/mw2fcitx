@@ -4,7 +4,7 @@ classifiers = [
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Development Status :: 4 - Beta',
   'Environment :: Console',
-  'License :: OSI Approved :: The Unlicense (Unlicense)',
+  'License :: OSI Approved :: MIT License',
   'Programming Language :: Python',
   'Programming Language :: Python :: 3', # When updating this, also update the test matrix in `.github/workflows/test.yml`; also update tool.pylint.main.py-version
   'Programming Language :: Python :: 3.9',
@@ -20,7 +20,7 @@ homepage = "https://github.com/outloudvi/mw2fcitx/"
 include = [
   'mw2fcitx/**/*.json',
 ]
-license = "Unlicense"
+license = "MIT"
 name = "mw2fcitx"
 package-mode = true
 packages = [

@@ -118,4 +118,4 @@ Read [BREAKING_CHANGES.md](./BREAKING_CHANGES.md) for details.
 
 ## License
 
-[The Unlicense](https://github.com/outloudvi/mw2fcitx/blob/master/LICENSE)
+[MIT License](https://github.com/outloudvi/mw2fcitx/blob/master/LICENSE)
