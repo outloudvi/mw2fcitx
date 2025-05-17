@@ -116,6 +116,4 @@ tweaks = [
     tweak_trim_suffix(["系列", "列表", "对照表"]),
     tweak_remove_regex(["^第.*(次|话)$"]),
     tweak_normalize,
-    tweak_opencc_t2s,
-    tweak_dedup,
 ]
