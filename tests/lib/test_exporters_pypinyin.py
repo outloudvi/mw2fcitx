@@ -1,7 +1,7 @@
-from mw2fcitx.exporters.opencc import export
+from mw2fcitx.exporters.pypinyin import export
 
 
-def test_opencc_exporter():
+def test_pypinyin_exporter():
     assert (
         export(["测试"]) == "测试\tce'shi\t0\n"
     )
@@ -22,7 +22,7 @@ def test_opencc_exporter():
     )
 
 
-def test_opencc_instinct_pinyin():  # outloudvi/mw2fcitx#29
+def test_pypinyin_instinct_pinyin():  # outloudvi/mw2fcitx#29
     assert (
         export([
             "唔呣",
