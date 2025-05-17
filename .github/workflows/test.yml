@@ -29,7 +29,9 @@ jobs:
           cache: 'poetry'
 
       - name: Run pylint
-        run: make lint
+        run: |
+          poetry install
+          make lint
 
       - name: Test version mark
         run: make test_version
