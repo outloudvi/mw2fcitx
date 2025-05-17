@@ -88,7 +88,11 @@ exports = {
             "disable_instinct_pinyin": False,
             # Pinyin results to replace. (optional)
             # Format: { "汉字": "pin'yin" }
-            "fixfile": "fixfile.json"
+            "fixfile": "fixfile.json",
+            # Characters to omit during pinyin conversion. (optional)
+            # These characters will be automatically removed while trying to convert to pinyin.
+            # As a result, words containing these characters will not be skipped in the dictionary.
+            "characters_to_omit": ["·"],
         }
     },
     # Generator configurations.
