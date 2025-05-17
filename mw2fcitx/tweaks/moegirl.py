@@ -93,6 +93,15 @@ def tweak_normalize(words):
     return ret
 
 
+def tweak_opencc_t2s(words):
+    import opencc
+    converter = opencc.OpenCC('t2s.json')
+    ret = []
+    for i in words:
+        ret.append(converter.convert(i))
+    return ret
+
+
 tweaks = [
     tweak_remove_word_includes(["○", "〇"]),
     tweak_split_word_with(
@@ -100,5 +109,7 @@ tweaks = [
     tweak_len_more_than(1),
     tweak_remove_char("·"),
     tweak_trim_suffix(["系列", "列表", "对照表"]),
-    tweak_remove_regex(["^第.*(次|话)$"]), tweak_normalize
+    tweak_remove_regex(["^第.*(次|话)$"]),
+    tweak_normalize,
+    tweak_opencc_t2s,
 ]
