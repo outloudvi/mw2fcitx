@@ -108,6 +108,10 @@ exports = {
 
 A sample config file is here: [`sample_config.py`](https://github.com/outloudvi/mw2fcitx/blob/master/mw2fcitx/sample_config.py)
 
+## Advanced mode
+
+As `mw2fcitx` provides the feature to append and override MediaWiki API parameters, it is possible to use it to collect other types of lists in addition to [`allpages`](https://www.mediawiki.org/wiki/Special:MyLanguage/API:Allpages). Please note that if `list`, `action` or `format` is overriden in `api_params`, `mw2fcitx` will not automatically append default parameters (including `aplimit`) while sending MediaWiki API requests. Please determine the parameters needed by yourself. [A configuration in tests](tests/cli/conf_list_categorymembers.py) may be helpful for your reference.
+
 ## Breaking changes across versions
 
 Read [BREAKING_CHANGES.md](./BREAKING_CHANGES.md) for details.

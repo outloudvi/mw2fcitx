@@ -3,3 +3,4 @@ LIBIME_REPOLOGY_URL = "https://repology.org/project/libime"
 PARTIAL_DEPRECATED_APCONTINUE = "apcontinue"
 PARTIAL_CONTINUE_DICT = "continue_dict"
 PARTIAL_TITLES = "titles"
+ADVANCED_MODE_TRIGGER_PARAMETER_NAMES = ["action", "list", "format"]
