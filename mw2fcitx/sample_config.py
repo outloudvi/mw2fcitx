@@ -2,7 +2,7 @@ from .tweaks.moegirl import tweaks
 
 exports = {
     "source": {
-        "api_path": "https://zh.moegirl.org.cn/api.php",
+        "api_path": "https://zh.wikipedia.org/w/api.php",
         "kwargs": {
             "api_title_limit": 120,
             "file_title_limit": 60,
@@ -14,7 +14,7 @@ exports = {
     "tweaks":
         tweaks,
     "converter": {
-        "use": "opencc",
+        "use": "pypinyin",
         "kwargs": {
             "fixfile": "sample_fixfile.json"
         }
