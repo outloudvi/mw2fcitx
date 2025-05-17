@@ -102,6 +102,11 @@ def tweak_opencc_t2s(words):
     return ret
 
 
+def tweak_dedup(words):
+    from mw2fcitx.utils import dedup
+    return dedup(words)
+
+
 tweaks = [
     tweak_remove_word_includes(["○", "〇"]),
     tweak_split_word_with(
@@ -112,4 +117,5 @@ tweaks = [
     tweak_remove_regex(["^第.*(次|话)$"]),
     tweak_normalize,
     tweak_opencc_t2s,
+    tweak_dedup,
 ]
