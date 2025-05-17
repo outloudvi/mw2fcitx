@@ -83,8 +83,8 @@ class MWFPipeline():
             f"Deduplication completed. {len(self.words)} items left.")
 
     def export_words(self, converter="pypinyin", **kwargs):
-        if converter == "pypinyin" \
-                or converter == "opencc":  # "opencc" is an alias for backward compatibility
+        # "opencc" is an alias for backward compatibility
+        if converter in ("pypinyin", "opencc"):
             console.debug(f"Exporting {len(self.words)} words with OpenCC")
             from mw2fcitx.exporters.pypinyin import export
             fixfile_path = kwargs.get('fixfile')
