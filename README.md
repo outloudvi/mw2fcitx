@@ -75,7 +75,7 @@ exports = {
     "converter": {
         # opencc is a built-in converter.
         # For custom converter functions, just give the function itself.
-        "use": "opencc",
+        "use": "pypinyin",
         "kwargs": {
             # Replace "m" to "mu" and "n" to "en". Default: False.
             # See more in https://github.com/outloudvi/mw2fcitx/issues/29 .

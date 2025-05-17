@@ -1,6 +1,5 @@
 from typing import List, Union
 from pypinyin import lazy_pinyin
-import opencc
 from ..logger import console
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
@@ -20,9 +19,9 @@ def manual_fix(text: str, table: dict) -> Union[str, None]:
 
 def export(words: List[Union[dict, str]], **kwargs) -> str:
     result = ""
-    converter = opencc.OpenCC('t2s.json')
     fix_table = kwargs.get("fix_table")
     count = 0
+    words.sort()
     for line in words:
         line = line.rstrip("\n")
 
@@ -45,7 +44,7 @@ def export(words: List[Union[dict, str]], **kwargs) -> str:
                 # print("Failed to convert, ignoring:", pinyin, file=sys.stderr)
                 continue
 
-        result += "\t".join((converter.convert(line), pinyin, "0"))
+        result += "\t".join((line, pinyin, "0"))
         result += "\n"
         count += 1
         if count % 1000 == 0:
