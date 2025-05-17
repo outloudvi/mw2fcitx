@@ -4,6 +4,10 @@ import pytest
 from mw2fcitx.main import inner_main
 
 
+def get_sorted_word_list(content: str) -> str:
+    return "\n".join(sorted(content.split("\n")[5:])).strip()
+
+
 def test_inner_main_name_without_py():
     inner_main(['-c', 'tests/cli/conf_one'])
 
@@ -19,13 +23,9 @@ def test_single_generator():
 def test_local():
     inner_main(['-c', 'tests/cli/conf_local'])
     with open("test_local_result.dict.yml", "r", encoding="utf-8") as f:
-        assert f.read() == """---
-name: e2etest_local
-version: "0.1"
-sort: by_weight
-...
+        assert get_sorted_word_list(f.read()) == """
 初音未来	chu yin wei lai
-"""
+迈克杰克逊	mai ke jie ke xun""".strip()
 
 
 def test_continue():
@@ -44,11 +44,10 @@ def test_err_no_path():
 def test_api_params():
     inner_main(['-c', 'tests/cli/conf_api_params'])
     with open("test_api_params.dict.yml", "r", encoding="utf-8") as f:
-        assert "\n".join(sorted(f.read().split("\n")[4:])) == """
-...
+        assert get_sorted_word_list(f.read()) == """
 专题关注	zhuan ti guan zhu
 全域动态	quan yu dong tai
-本地社群新闻	ben di she qun xin wen"""
+本地社群新闻	ben di she qun xin wen""".strip()
 
 
 def test_api_title_limit():
@@ -66,3 +65,11 @@ def test_list_categorymembers():
 def test_err_no_path():
     with pytest.raises(SystemExit):
         inner_main(['-c', 'tests/cli/conf_err_invalid_api_params'])
+
+
+def test_chars_to_omit():
+    inner_main(['-c', 'tests/cli/conf_chars_to_omit'])
+    with open("test_chars_to_omit.dict.yml", "r", encoding="utf-8") as f:
+        assert get_sorted_word_list(f.read()) == """
+初音未来	chu yin wei lai
+迈克·杰克逊	mai ke jie ke xun""".strip()
