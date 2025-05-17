@@ -6,10 +6,14 @@ from typing import Any, List, Union
 from urllib.parse import urlencode
 import urllib3
 
-from .const import PARTIAL_CONTINUE_DICT, PARTIAL_DEPRECATED_APCONTINUE, PARTIAL_TITLES
 
-from .version import PKG_VERSION
+from .const import ADVANCED_MODE_TRIGGER_PARAMETER_NAMES, \
+    PARTIAL_CONTINUE_DICT, \
+    PARTIAL_DEPRECATED_APCONTINUE, \
+    PARTIAL_TITLES
 from .logger import console
+from .version import PKG_VERSION
+
 
 http = urllib3.PoolManager()
 
@@ -51,14 +55,43 @@ def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
         return [[], None]
 
 
-def warn_unsafe_api_params(params: dict, param_names: List[str]):
+def warn_advanced_mode(params: dict, param_names: List[str]) -> bool:
+    is_advanced_mode = False
     for i in param_names:
         if i in params:
             console.warning(
                 f"I'm seeing `{i}` in `api_params`. "
-                "Usually this parameter should not be changed. "
-                "Make sure you know what you're doing."
+                "Advanced Mode is enabled. "
+                "No parameter will be injected automatically."
             )
+        is_advanced_mode = True
+
+    return is_advanced_mode
+
+
+def populate_api_params(custom_api_params: dict, deprecated_aplimit: Union[None, int]) -> dict:
+    api_params = {}
+    if not warn_advanced_mode(custom_api_params, ADVANCED_MODE_TRIGGER_PARAMETER_NAMES):
+        # Deprecated `aplimit`
+        aplimit = int(
+            deprecated_aplimit) if deprecated_aplimit != "max" else "max"
+        if deprecated_aplimit is not None:
+            console.warning(
+                "Warn: `source.kwargs.aplimit` is deprecated - "
+                "please use `source.kwargs.api_param.aplimit` instead.")
+        if "aplimit" not in custom_api_params:
+            custom_api_params["aplimit"] = aplimit
+
+        api_params = {
+            # default params
+            "aplimit": "max",
+            "action": "query",
+            "list": "allpages",
+            "format": "json"
+        }
+
+    api_params.update(custom_api_params)
+    return api_params
 
 
 def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
@@ -69,31 +102,13 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     titles = []
     partial_path = kwargs.get("partial")
     time_wait = float(kwargs.get("request_delay", "2"))
-    _aplimit = kwargs.get("aplimit", "max")
-    aplimit = int(_aplimit) if _aplimit != "max" else "max"
     custom_api_params = kwargs.get("api_params", {})
     if not isinstance(custom_api_params, dict):
         console.error(
             f"Type of `api_params` is not dict or None, but {type(custom_api_params)}")
         sys.exit(1)
 
-    # Deprecated
-    if kwargs.get("aplimit") is not None:
-        console.warning(
-            "Warn: `source.kwargs.aplimit` is deprecated - "
-            "please use `source.kwargs.api_param.aplimit` instead.")
-    if "aplimit" not in custom_api_params:
-        custom_api_params["aplimit"] = aplimit
-
-    api_params = {
-        # default params
-        "aplimit": "max",
-        "action": "query",
-        "list": "allpages",
-        "format": "json"
-    }
-    warn_unsafe_api_params(custom_api_params, ["action", "format"])
-    api_params.update(custom_api_params)
+    api_params = populate_api_params(custom_api_params, kwargs.get("aplimit"))
     base_fetch_url = f"{api_url}?{urlencode(api_params)}"
     first_fetch_url = base_fetch_url
     if partial_path is not None:
