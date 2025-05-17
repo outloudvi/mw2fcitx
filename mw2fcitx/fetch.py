@@ -55,40 +55,42 @@ def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
         return [[], None]
 
 
-def warn_advanced_mode(params: dict, param_names: List[str]) -> bool:
+def warn_advanced_mode(custom_api_params: dict, triggerer_param_names: List[str]) -> bool:
     is_advanced_mode = False
-    for i in param_names:
-        if i in params:
+    for param_name in triggerer_param_names:
+        if param_name in custom_api_params:
             console.warning(
-                f"I'm seeing `{i}` in `api_params`. "
+                f"I'm seeing `{param_name}` in `api_params`. "
                 "Advanced Mode is enabled. "
-                "No parameter will be injected automatically."
+                "No parameter except for `format` will be injected automatically."
             )
-        is_advanced_mode = True
+            is_advanced_mode = True
 
     return is_advanced_mode
 
 
 def populate_api_params(custom_api_params: dict, deprecated_aplimit: Union[None, int]) -> dict:
-    api_params = {}
+    api_params = {
+        "format": "json"
+    }
+
     if not warn_advanced_mode(custom_api_params, ADVANCED_MODE_TRIGGER_PARAMETER_NAMES):
         # Deprecated `aplimit`
-        aplimit = int(
-            deprecated_aplimit) if deprecated_aplimit != "max" else "max"
         if deprecated_aplimit is not None:
             console.warning(
                 "Warn: `source.kwargs.aplimit` is deprecated - "
                 "please use `source.kwargs.api_param.aplimit` instead.")
+        aplimit = int(
+            deprecated_aplimit) if deprecated_aplimit != "max" and deprecated_aplimit is not None else "max"
         if "aplimit" not in custom_api_params:
             custom_api_params["aplimit"] = aplimit
 
-        api_params = {
+        api_params.update({
             # default params
             "aplimit": "max",
             "action": "query",
             "list": "allpages",
-            "format": "json"
-        }
+        })
 
     api_params.update(custom_api_params)
     return api_params
@@ -150,6 +152,14 @@ def fetch_all_titles_inner(
             console.error(
                 f"MediaWiki API error: [code: {error_code}] {error_msg}"
             )
+        if not "query" in data:
+            console.error(
+                "No `query` found in response. "
+                "Please check the response body for any potential issues:"
+            )
+            console.error(data)
+            sys.exit(1)
+
         for (_, item_value) in data["query"].items():
             titles += list(map(lambda x: x["title"], item_value))
         if title_limit != -1 and len(titles) >= title_limit:

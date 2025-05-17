@@ -61,3 +61,8 @@ def test_list_categorymembers():
     inner_main(['-c', 'tests/cli/conf_list_categorymembers'])
     with open("test_list_categorymembers.titles.txt", "r", encoding="utf-8") as f:
         assert len(f.read().split("\n")) == 10
+
+
+def test_err_no_path():
+    with pytest.raises(SystemExit):
+        inner_main(['-c', 'tests/cli/conf_err_invalid_api_params'])
