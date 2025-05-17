@@ -6,12 +6,10 @@ exports = {
         "kwargs": {
             "title_limit": 10,
             "api_params": {
-                "action": "query",
-                "list": "categorymembers",
-                "cmtitle": "Category:天津市历史风貌建筑",
-                "cmlimit": 5
+                "action": "paraminfo",
+                "modules": "query+allpages"
             },
-            "output": "test_list_categorymembers.titles.txt"
+            "output": "test_err_invalid_api_params.titles.txt"
         }
     },
     "tweaks": [],
