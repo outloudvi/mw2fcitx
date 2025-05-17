@@ -80,8 +80,9 @@ def populate_api_params(custom_api_params: dict, deprecated_aplimit: Union[None,
             console.warning(
                 "Warn: `source.kwargs.aplimit` is deprecated - "
                 "please use `source.kwargs.api_param.aplimit` instead.")
-        aplimit = int(
-            deprecated_aplimit) if deprecated_aplimit != "max" and deprecated_aplimit is not None else "max"
+        aplimit = int(deprecated_aplimit) \
+            if deprecated_aplimit != "max" and deprecated_aplimit is not None \
+            else "max"
         if "aplimit" not in custom_api_params:
             custom_api_params["aplimit"] = aplimit
 
