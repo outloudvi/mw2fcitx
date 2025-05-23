@@ -3,7 +3,7 @@ from ..logger import console
 
 
 def gen(text, **kwargs):
-    name = kwargs.get("name") or "moegirl"
+    name = kwargs.get("name") or "unnamed_dict"
     version = kwargs.get("version") or "0.1"
     text = re.sub(r'[ ][ ]*', '\t', text)
     text = text.replace("\t0", "")
