@@ -4,23 +4,16 @@ from os import access, R_OK
 import time
 from typing import Any, List, Union
 from urllib.parse import urlencode
-import urllib3
-
 
 from .const import ADVANCED_MODE_TRIGGER_PARAMETER_NAMES, \
     PARTIAL_CONTINUE_DICT, \
     PARTIAL_DEPRECATED_APCONTINUE, \
     PARTIAL_TITLES
 from .logger import console
-from .version import PKG_VERSION
+from .utils import create_requests_session
 
 
-http = urllib3.PoolManager()
-
-HEADERS = {
-    "User-Agent": f"MW2Fcitx/{PKG_VERSION}; github.com/outloudvi/fcitx5-pinyin-moegirl",
-    "Accept-Encoding": "gzip, deflate"
-}
+s = create_requests_session()
 
 
 def save_to_partial(partial_path: str, titles: List[str], continue_dict: dict):
@@ -112,22 +105,21 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
         sys.exit(1)
 
     api_params = populate_api_params(custom_api_params, kwargs.get("aplimit"))
-    base_fetch_url = f"{api_url}?{urlencode(api_params)}"
-    first_fetch_url = base_fetch_url
     if partial_path is not None:
         console.info(f"Partial session will be saved/read: {partial_path}")
         [titles, continue_dict] = resume_from_partial(partial_path)
         if continue_dict is not None:
-            first_fetch_url += f"&{urlencode(continue_dict)}"
+            api_params.update(continue_dict)
             console.info(
                 f"{len(titles)} titles found. Continuing from {continue_dict}")
-    resp = http.request("GET", first_fetch_url, headers=HEADERS, retries=3)
+    resp = s.get(api_url, params=api_params)
     initial_data = resp.json()
     titles = fetch_all_titles_inner(
         titles,
         initial_data,
         title_limit,
-        base_fetch_url,
+        api_url,
+        api_params,
         partial_path,
         time_wait
     )
@@ -140,7 +132,8 @@ def fetch_all_titles_inner(
     titles: List[str],
     initial_data: Any,
     title_limit: int,
-    base_fetch_url: str,
+    api_url: str,
+    initial_api_params: dict,
     partial_path: Union[str, None],
     time_wait: float
 ) -> List[str]:
@@ -172,9 +165,9 @@ def fetch_all_titles_inner(
             try:
                 continue_dict = data["continue"]
                 console.debug(f"Continuing from {continue_dict}")
-                data = http.request("GET", base_fetch_url + f"&{urlencode(continue_dict)}",
-                                    headers=HEADERS,
-                                    retries=3).json()
+                api_params = initial_api_params.copy()
+                api_params.update(continue_dict)
+                data = s.get(api_url, params=api_params).json()
             except Exception as e:
                 if isinstance(e, KeyboardInterrupt):
                     console.error("Keyboard interrupt received. Stopping.")
