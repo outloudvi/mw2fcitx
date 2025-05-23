@@ -1,5 +1,11 @@
 from copy import deepcopy
 from typing import List
+from urllib3.util import Retry
+from requests import Session
+from requests.adapters import HTTPAdapter
+
+
+from .version import PKG_VERSION
 
 
 def normalize(word):
@@ -52,3 +58,17 @@ def is_libime_used(config):
 
 def dedup(arr: List[str]):
     return list(set(arr))
+
+
+def create_requests_session():
+    s = Session()
+    retries = Retry(
+        total=3,
+        backoff_factor=1,
+    )
+    s.headers.update({
+        "User-Agent": f"MW2Fcitx/{PKG_VERSION}; github.com/outloudvi/fcitx5-pinyin-moegirl",
+    })
+    s.mount('http://', HTTPAdapter(max_retries=retries))
+    s.mount('https://', HTTPAdapter(max_retries=retries))
+    return s
