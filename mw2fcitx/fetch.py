@@ -3,7 +3,6 @@ import json
 from os import access, R_OK
 import time
 from typing import Any, List, Union
-from urllib.parse import urlencode
 
 from .const import ADVANCED_MODE_TRIGGER_PARAMETER_NAMES, \
     PARTIAL_CONTINUE_DICT, \
