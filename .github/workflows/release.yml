@@ -21,11 +21,11 @@ on:
           - major
         required: true
       custom_version:
-        description: Manual Custom Version (Special Purpose, v*)
+        description: Manual Custom Version
         type: string
         required: false
       dry_run:
-        description: 'Dry run?'
+        description: "Dry run?"
         type: boolean
         default: false
 
@@ -55,7 +55,7 @@ jobs:
           if [ -n "${{ inputs.custom_version }}" ]; then
             NEXT_VERSION="${{ inputs.custom_version }}"
           else
-            NEXT_VERSION="v$(semver --increment ${{ inputs.semver }} ${PREV_VERSION})"
+            NEXT_VERSION="$(semver --increment ${{ inputs.semver }} ${PREV_VERSION})"
           fi
 
           echo "PREV_VERSION=${PREV_VERSION}" >> $GITHUB_ENV
@@ -80,10 +80,10 @@ jobs:
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         if: ${{ !inputs.dry_run }}
         with:
-          branch: 'rel/${{ env.VERSION }}'
-          commit-message: 'chore: rel ${{ env.VERSION }}'
-          title: 'Release ${{ env.VERSION }}'
-          label: release
+          branch: "rel/${{ env.VERSION }}"
+          commit-message: "chore: rel ${{ env.VERSION }}"
+          title: "Release ${{ env.VERSION }}"
+          labels: release
           body: |
             ## Release ${{ env.VERSION }}
 
