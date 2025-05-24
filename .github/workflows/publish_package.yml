@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - main
+      - master
     types:
       - closed
 
@@ -27,8 +27,8 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: '3.12'
-          cache: 'poetry'
+          python-version: "3.12"
+          cache: "poetry"
 
       - name: Install dependencies
         run: |
