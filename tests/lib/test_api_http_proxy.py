@@ -2,7 +2,10 @@ import os
 import pytest
 from requests.exceptions import ProxyError
 
+from tests.lib.util import requires_real_world
 
+
+@requires_real_world()
 def test_http_proxy():
     old_value = os.environ.get("HTTPS_PROXY")
 
