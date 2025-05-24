@@ -5,6 +5,10 @@
 name: Create release
 run-name: Release ${{ inputs.semver }} ${{ inputs.dry_run && '(dry-run)' || '' }}
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   workflow_dispatch:
     inputs:
