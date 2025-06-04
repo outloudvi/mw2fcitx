@@ -8,12 +8,8 @@ def test_fixfile_with_partial():
     pipeline.convert_to_words([])
     pipeline.export_words(converter="pypinyin", fix_table={
         "测试": "pin'yin",
-        "测试二": {
-            "to": "yi'er'san"
-        },
-        "刻俄柏": {
-            "to": "ke'e'bo"
-        }
+        "测试二": "yi'er'san",
+        "刻俄柏": "ke'e'bo",
     })
     pipeline.generate_dict(generator="rime")
     assert get_sorted_word_list(pipeline.dict) == """

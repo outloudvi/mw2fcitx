@@ -47,8 +47,8 @@ def test_fixfile():
             "测试",
             "文档"
         ], fix_table={
-            "测试": "a'a'a"
+            "测试": "a'a"
         }
-        ) == "测试\ta'a'a\t0\n"
+        ) == "测试\ta'a\t0\n"
         "文档\twen'dang\t0\n"
     )
