@@ -26,7 +26,7 @@ def export(words: List[Union[dict, str]], **kwargs) -> str:
         PYPINYIN_KW_DISABLE_INSTINCT_PINYIN) is True
     characters_to_omit = kwargs.get(PYPINYIN_KW_CHARACTERS_TO_OMIT, [])
 
-    fix_table = kwargs.get("fix_table")
+    fix_table = kwargs.get("fix_table") or {}
     load_phrases(fix_table)
 
     result = ""
