@@ -88,6 +88,7 @@ exports = {
             "disable_instinct_pinyin": False,
             # Pinyin results to replace. (optional)
             # Format: { "汉字": "pin'yin" }
+            # The result will be sent into `pypinyin` as a phrase, so words containing this phrase are also affected.
             "fixfile": "fixfile.json",
             # Characters to omit during pinyin conversion. (optional)
             # These characters will be automatically removed while trying to convert to pinyin.
