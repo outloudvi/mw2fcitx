@@ -2,11 +2,7 @@ import time
 import pytest
 
 from mw2fcitx.main import inner_main
-from tests.lib.util import requires_real_world
-
-
-def get_sorted_word_list(content: str) -> str:
-    return "\n".join(sorted(content.split("\n")[5:])).strip()
+from tests.lib.util import requires_real_world, get_sorted_word_list
 
 
 def test_inner_main_name_without_py():

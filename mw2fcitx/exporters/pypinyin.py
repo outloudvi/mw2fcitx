@@ -1,5 +1,5 @@
 from typing import List, Union
-from pypinyin import lazy_pinyin
+from pypinyin import lazy_pinyin, load_phrases_dict
 
 from ..const import PYPINYIN_KW_CHARACTERS_TO_OMIT, PYPINYIN_KW_DISABLE_INSTINCT_PINYIN
 from ..logger import console
@@ -13,10 +13,12 @@ INSTINCT_PINYIN_MAPPING = {
 }
 
 
-def manual_fix(text: str, table: dict) -> Union[str, None]:
-    if text in table:
-        return table[text]
-    return None
+def load_phrases(fix_table: dict):
+    items = {}
+    for (key, value) in fix_table.items():
+        phrases = list(map(lambda x: [x], value.split("'")))
+        items[key] = phrases
+    load_phrases_dict(items)
 
 
 def export(words: List[Union[dict, str]], **kwargs) -> str:
@@ -24,18 +26,15 @@ def export(words: List[Union[dict, str]], **kwargs) -> str:
         PYPINYIN_KW_DISABLE_INSTINCT_PINYIN) is True
     characters_to_omit = kwargs.get(PYPINYIN_KW_CHARACTERS_TO_OMIT, [])
 
-    result = ""
     fix_table = kwargs.get("fix_table")
+    load_phrases(fix_table)
+
+    result = ""
     count = 0
     for line in words:
         line = line.rstrip("\n")
 
         pinyin = None
-        if fix_table is not None:
-            fixed_pinyin = manual_fix(line, fix_table)
-            if fixed_pinyin is not None:
-                pinyin = fixed_pinyin
-                console.debug(f"Fixing {line} to {pinyin}")
 
         line_for_pinyin = line
         if len(characters_to_omit) > 0:
