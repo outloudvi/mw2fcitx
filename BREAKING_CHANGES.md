@@ -1,5 +1,9 @@
 ## Breaking Changes
 
+### 0.22.0
+
+* BREAKING: `fixfile` is now sent into `pypinyin` via [`load_phrases_dict`](https://pypinyin.readthedocs.io/zh-cn/master/api.html#pypinyin.load_phrases_dict). It may lead to different behaviors as before: In the past only the single word that fully match the phrase is affected, while an `fixfile` entry in the current design will also impact words that contain the phrase.
+
 ### 0.20.0
 
 * BREAKING: Like what `file_title_limit` is already doing, `api_title_limit` now also works to trim the title count to the exact limit number.
