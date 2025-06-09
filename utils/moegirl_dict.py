@@ -2,8 +2,9 @@ from mw2fcitx.tweaks.moegirl import tweaks
 
 exports = {
     "source": {
-        "api_path": "https://zh.moegirl.org.cn/api.php",
+        # "api_path": "https://zh.moegirl.org.cn/api.php",
         "file_path": [
+            "titles.txt",  # use file-based title source for now
             "extras/pcr.txt"
         ],
         "kwargs": {
