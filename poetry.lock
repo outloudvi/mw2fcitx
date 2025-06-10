@@ -673,4 +673,4 @@ opencc = ["OpenCC"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<4.0"
-content-hash = "c305c5980f4b94fb3a5e3848986fe06c39963af9d9fee081868ea3bab72c184a"
+content-hash = "d35a0334e8166c87b85e14945c00adf0a4629b93fcf77906727e90df608368ca"
