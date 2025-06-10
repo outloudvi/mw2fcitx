@@ -77,7 +77,7 @@ jobs:
         env:
           TEST_REAL_WORLD: true
         run: |
-          poetry install --with opencc
+          poetry install -E opencc
           make test_opencc
 
       - name: Upload coverage reports to Codecov
