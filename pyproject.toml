@@ -1,50 +1,51 @@
+[project]
+authors = [{name = "Outvi V", email = "oss+pypi@outv.im>"}]
+dependencies = [
+  "pypinyin (>=0.54.0,<0.55.0)",
+  "pyyaml (>=6.0.2,<7.0.0)",
+  "requests (>=2.32.4,<3.0.0)",
+]
+description = "Build fcitx5/RIME dictionaries from MediaWiki sites"
+dynamic = ["classifiers"]
+keywords = ["fcitx", "dictionary"]
+license = "MIT"
+name = "mw2fcitx"
+readme = "README.md"
+requires-python = ">=3.9"
+version = "0.22.0"
+
+[project.scripts]
+mw2fcitx = 'mw2fcitx.main:main'
+
+[project.urls]
+Discussions = "https://github.com/outloudvi/mw2fcitx/discussions"
+"Issue Tracker" = "https://github.com/outloudvi/mw2fcitx/issues"
+repository = "https://github.com/outloudvi/mw2fcitx"
+
 [tool.poetry]
-authors = ["Outvi V <oss+pypi@outv.im>"]
 classifiers = [
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Development Status :: 4 - Beta',
   'Environment :: Console',
-  'License :: OSI Approved :: MIT License',
-  'Programming Language :: Python',
-  'Programming Language :: Python :: 3', # When updating this, also update the test matrix in `.github/workflows/test.yml`; also update tool.pylint.main.py-version
-  'Programming Language :: Python :: 3.9',
-  'Programming Language :: Python :: 3.10',
-  'Programming Language :: Python :: 3.11',
-  'Programming Language :: Python :: 3.12',
-  'Programming Language :: Python :: 3.13',
   'Topic :: Text Processing',
   'Topic :: Utilities',
 ]
-description = "Build fcitx5/RIME dictionaries from MediaWiki sites"
-homepage = "https://github.com/outloudvi/mw2fcitx/"
 include = [
   'mw2fcitx/**/*.json',
 ]
-license = "MIT"
-name = "mw2fcitx"
 package-mode = true
 packages = [
   {include = "mw2fcitx"},
   {include = "tests", format = "sdist"},
 ]
-readme = "README.md"
-repository = "https://github.com/outloudvi/mw2fcitx/"
-version = "0.22.0"
 
-[tool.poetry.scripts]
-mw2fcitx = 'mw2fcitx.main:main'
+[project.optional-dependencies]
+opencc = [
+  "OpenCC (>=1.1.9,<2.0.0)",
+]
 
 [tool.poetry.dependencies]
-pypinyin = "^0.52.0"
-python = "^3.9"
-requests = "^2.32.3"
-pyyaml = "^6.0.2"
-
-[tool.poetry.group.opencc]
-optional = true
-
-[tool.poetry.group.opencc.dependencies]
-OpenCC = "^1.1.7"
+python = ">=3.9,<4.0"
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^2.3.1"
