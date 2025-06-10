@@ -1,9 +1,5 @@
 from mw2fcitx.tweaks.moegirl import tweaks, tweak_opencc_t2s
 
-tweaks_with_opencc = []
-tweaks_with_opencc.append(*tweaks)
-tweaks_with_opencc.append(tweak_opencc_t2s)
-
 exports = {
     "source": {
         # "api_path": "https://zh.moegirl.org.cn/api.php",
@@ -15,7 +11,7 @@ exports = {
             "output": "titles.txt"
         }
     },
-    "tweaks": tweaks_with_opencc,
+    "tweaks": tweaks + [tweak_opencc_t2s],
     "converter": {
         "use": "opencc",
         "kwargs": {
