@@ -7,7 +7,7 @@ pacman -Syu --noconfirm libime uv
 uv python install 3.12
 uv venv --python 3.12
 source .venv/bin/activate
-uv pip install mw2fcitx
+uv pip install mw2fcitx[opencc]
 mw2fcitx -c utils/moegirl_dict.py
 
 useradd archbuild

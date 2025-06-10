@@ -1,4 +1,8 @@
-from mw2fcitx.tweaks.moegirl import tweaks
+from mw2fcitx.tweaks.moegirl import tweaks, tweak_opencc_t2s
+
+tweaks_with_opencc = []
+tweaks_with_opencc.append(*tweaks)
+tweaks_with_opencc.append(tweak_opencc_t2s)
 
 exports = {
     "source": {
@@ -11,8 +15,7 @@ exports = {
             "output": "titles.txt"
         }
     },
-    "tweaks":
-        tweaks,
+    "tweaks": tweaks_with_opencc,
     "converter": {
         "use": "opencc",
         "kwargs": {
