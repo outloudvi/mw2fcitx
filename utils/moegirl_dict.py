@@ -21,7 +21,8 @@ exports = {
     "generator": [{
         "use": "rime",
         "kwargs": {
-            "version": "0.0.1",
+            "name": "moegirl",
+            "version": "99999999",
             "output": "moegirl.dict.yaml"
         }
     }, {
