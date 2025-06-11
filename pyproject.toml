@@ -12,7 +12,7 @@ license = "MIT"
 name = "mw2fcitx"
 readme = "README.md"
 requires-python = ">=3.9"
-version = "0.23.0"
+version = "0.24.0"
 
 [project.scripts]
 mw2fcitx = 'mw2fcitx.main:main'
