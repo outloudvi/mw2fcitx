@@ -22,14 +22,14 @@ def save_to_partial(partial_path: str, titles: List[str], continue_dict: dict):
     try:
         with open(partial_path, "w", encoding="utf-8") as fp:
             fp.write(json.dumps(ret, ensure_ascii=False))
-        log.debug(f"Partial session saved to {partial_path}")
+        log.debug("Partial session saved to %s", partial_path)
     except Exception as e:
         log.error(str(e))
 
 
 def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
     if not access(partial_path, R_OK):
-        log.warning(f"Cannot read partial session: {partial_path}")
+        log.warning("Cannot read partial session: %s", partial_path)
         return [[], None]
     try:
         with open(partial_path, "r", encoding="utf-8") as fp:
@@ -54,9 +54,9 @@ def warn_advanced_mode(custom_api_params: dict, triggerer_param_names: List[str]
     for param_name in triggerer_param_names:
         if param_name in custom_api_params:
             log.warning(
-                f"I'm seeing `{param_name}` in `api_params`. "
+                "I'm seeing `%s` in `api_params`. "
                 "Advanced Mode is enabled. "
-                "No parameter except for `format` will be injected automatically."
+                "No parameter except for `format` will be injected automatically.", param_name
             )
             is_advanced_mode = True
 
@@ -94,25 +94,26 @@ def populate_api_params(custom_api_params: dict, deprecated_aplimit: Union[None,
 def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
     title_limit = kwargs.get(
         "api_title_limit") or kwargs.get("title_limit") or -1
-    log.debug(f"Fetching titles from {api_url}" +
-              (f" with a limit of {title_limit}" if title_limit != -1 else ""))
+    log_msg = f"Fetching titles from {api_url}" + \
+        (f" with a limit of {title_limit}" if title_limit != -1 else "")
+    log.debug(log_msg)
     titles = []
     partial_path = kwargs.get("partial")
     time_wait = float(kwargs.get("request_delay", "2"))
     custom_api_params = kwargs.get("api_params", {})
     if not isinstance(custom_api_params, dict):
         log.error(
-            f"Type of `api_params` is not dict or None, but {type(custom_api_params)}")
+            "Type of `api_params` is not dict or None, but %s", type(custom_api_params))
         sys.exit(1)
 
     api_params = populate_api_params(custom_api_params, kwargs.get("aplimit"))
     if partial_path is not None:
-        log.info(f"Partial session will be saved/read: {partial_path}")
+        log.info("Partial session will be saved/read: %s", partial_path)
         [titles, continue_dict] = resume_from_partial(partial_path)
         if continue_dict is not None:
             api_params.update(continue_dict)
             log.info(
-                f"{len(titles)} titles found. Continuing from {continue_dict}")
+                "%d titles found. Continuing from %s", len(titles), continue_dict)
     resp = s.get(api_url, params=api_params)
     initial_data = resp.json()
     titles = fetch_all_titles_inner(
@@ -145,7 +146,7 @@ def fetch_all_titles_inner(
             error_code = data["error"].get("code", "?")
             error_msg = data["error"].get("info", str(data["error"]))
             log.error(
-                f"MediaWiki API error: [code: {error_code}] {error_msg}"
+                "MediaWiki API error: [code: %s] %s", error_code, error_msg
             )
         if not "query" in data:
             log.error(
@@ -160,12 +161,13 @@ def fetch_all_titles_inner(
         if title_limit != -1 and len(titles) >= title_limit:
             titles = titles[:title_limit]
             break
-        log.debug(f"Got {len(titles)} pages")
+        log.debug("Got %s pages", len(titles))
         if "continue" in data:
             time.sleep(time_wait)
+            continue_dict = {}
             try:
                 continue_dict = data["continue"]
-                log.debug(f"Continuing from {continue_dict}")
+                log.debug("Continuing from %s", continue_dict)
                 api_params = initial_api_params.copy()
                 api_params.update(continue_dict)
                 data = s.get(api_url, params=api_params).json()

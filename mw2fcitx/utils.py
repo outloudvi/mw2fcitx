@@ -82,12 +82,12 @@ def create_requests_session():
 
 
 def try_file(file):
-    log.debug(f"Finding config file: {file}")
+    log.debug("Finding config file: %s", file)
     if not os.access(file, os.R_OK):
         log.error("File ({}) not readable.")
         return False
     file_realpath = os.path.realpath(file)
-    log.debug(f"Config file path: {file_realpath}")
+    log.debug("Config file path: %s", file_realpath)
     file_path = os.path.dirname(file_realpath)
     file_name = os.path.basename(file_realpath)
     module_name = re.sub(r"\.py$", "", file_name)
@@ -96,7 +96,7 @@ def try_file(file):
         sys.path.insert(1, file_path)
         config_file = import_module(module_name)
     except Exception as e:
-        log.error(f"Error reading config: {str(e)}")
+        log.error("Error reading config: %s", str(e))
         return False
     finally:
         sys.path.remove(file_path)

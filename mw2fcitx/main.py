@@ -47,12 +47,12 @@ def inner_main(args):
         config_base = try_file(file + ".py")
     if not config_base:
         filename = f"{file}, {file}.py" if file.endswith("py") else file
-        log.error(f"Config file {filename} not found or not readable")
+        log.error("Config file %s not found or not readable", filename)
         sys.exit(1)
-    log.debug(f"Parsing config file: {file}")
+    log.debug("Parsing config file: %s", file)
     if objname not in dir(config_base):
         log.error(
-            f"Exports not found. Please make sure your config in in a object called '{objname}'."
+            "Exports not found. Please make sure your config in in a object called '%s'.", objname
         )
         sys.exit(1)
     config_object = getattr(config_base, objname)
@@ -66,12 +66,11 @@ def inner_main(args):
     config_object = smart_rewrite(config_object)
     if is_libime_used(config_object) and shutil.which(LIBIME_BIN_NAME) is None:
         log.warning(
-            f"You are trying to generate fcitx dictionary, "
-            f"while {LIBIME_BIN_NAME} doesn't seem to exist."
+            "You are trying to generate fcitx dictionary, while %s doesn't seem to exist.",
+            LIBIME_BIN_NAME
         )
         log.warning(
-            f"This might cause issues. "
-            f"Please install libime: {LIBIME_REPOLOGY_URL}"
+            "This might cause issues. Please install libime: %s", LIBIME_REPOLOGY_URL
         )
     build(config_object)
 

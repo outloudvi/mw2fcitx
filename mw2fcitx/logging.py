@@ -28,13 +28,15 @@ def setup_logger():
 def update_log_level(args_log_level_str: str):
     override_log_level = LOG_LEVEL_MAPPING.get(args_log_level_str)
     if override_log_level is None:
-        log.warning(f"Invalid --log-level: {args_log_level_str}, ignoring")
+        log.warning("Invalid --log-level: %s, ignoring", args_log_level_str)
     env_log_level_str = os.environ.get(LOG_LEVEL_ENV_VARIABLE)
     if env_log_level_str is not None:
         env_override_log_level = LOG_LEVEL_MAPPING.get(env_log_level_str)
         if env_override_log_level is None:
             log.warning(
-                f"Invalid environment variable {LOG_LEVEL_ENV_VARIABLE}: {env_log_level_str}, ignoring")
+                "Invalid environment variable `%s`: %s, ignoring",
+                LOG_LEVEL_ENV_VARIABLE,
+                env_log_level_str)
         else:
             override_log_level = env_override_log_level
     if override_log_level is not None:
