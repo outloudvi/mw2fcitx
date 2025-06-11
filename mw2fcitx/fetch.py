@@ -5,6 +5,8 @@ from os import access, R_OK
 import time
 from typing import Any, List, Union
 
+from requests import Session
+
 from .const import ADVANCED_MODE_TRIGGER_PARAMETER_NAMES, \
     PARTIAL_CONTINUE_DICT, \
     PARTIAL_DEPRECATED_APCONTINUE, \
@@ -12,9 +14,6 @@ from .const import ADVANCED_MODE_TRIGGER_PARAMETER_NAMES, \
 from .utils import create_requests_session
 
 log = logging.getLogger(__name__)
-
-
-s = create_requests_session()
 
 
 def save_to_partial(partial_path: str, titles: List[str], continue_dict: dict):
@@ -114,6 +113,7 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
             api_params.update(continue_dict)
             log.info(
                 "%d titles found. Continuing from %s", len(titles), continue_dict)
+    s = create_requests_session(kwargs.get("user_agent"))
     resp = s.get(api_url, params=api_params)
     initial_data = resp.json()
     titles = fetch_all_titles_inner(
@@ -123,7 +123,8 @@ def fetch_all_titles(api_url: str, **kwargs) -> List[str]:
         api_url,
         api_params,
         partial_path,
-        time_wait
+        time_wait,
+        s
     )
     log.info("Finished.")
     return titles
@@ -137,7 +138,8 @@ def fetch_all_titles_inner(
     api_url: str,
     initial_api_params: dict,
     partial_path: Union[str, None],
-    time_wait: float
+    time_wait: float,
+    s: Session
 ) -> List[str]:
     data = initial_data
 
