@@ -30,7 +30,7 @@ def save_to_partial(partial_path: str, titles: List[str], continue_dict: dict):
 def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
     if not access(partial_path, R_OK):
         log.warning("Cannot read partial session: %s", partial_path)
-        return [[], None]
+        return ([], {})
     try:
         with open(partial_path, "r", encoding="utf-8") as fp:
             partial_data = json.load(fp)
@@ -46,7 +46,7 @@ def resume_from_partial(partial_path: str) -> tuple[List[str], dict]:
     except Exception as e:
         log.error(str(e))
         log.error("Failed to parse partial session")
-        return [[], None]
+        return ([], {})
 
 
 def warn_advanced_mode(custom_api_params: dict, triggerer_param_names: List[str]) -> bool:
