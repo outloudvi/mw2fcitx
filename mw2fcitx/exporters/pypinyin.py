@@ -1,5 +1,5 @@
 import logging
-from typing import List, Union
+from typing import List
 from pypinyin import lazy_pinyin, load_phrases_dict
 
 from ..const import PYPINYIN_KW_CHARACTERS_TO_OMIT, PYPINYIN_KW_DISABLE_INSTINCT_PINYIN
@@ -23,7 +23,7 @@ def load_phrases(fix_table: dict):
     load_phrases_dict(items)
 
 
-def export(words: List[Union[dict, str]], **kwargs) -> str:
+def export(words: List[str], **kwargs) -> str:
     disable_instinct_pinyin = kwargs.get(
         PYPINYIN_KW_DISABLE_INSTINCT_PINYIN) is True
     characters_to_omit = kwargs.get(PYPINYIN_KW_CHARACTERS_TO_OMIT, [])
@@ -60,8 +60,8 @@ def export(words: List[Union[dict, str]], **kwargs) -> str:
         result += "\n"
         count += 1
         if count % 1000 == 0:
-            log.debug(str(count) + " converted")
+            log.debug("%d converted", count)
 
     if count % 1000 != 0 or count == 0:
-        log.debug(str(count) + " converted")
+        log.debug("%d converted", count)
     return result
