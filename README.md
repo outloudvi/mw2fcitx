@@ -69,7 +69,9 @@ exports = {
             "api_params": {
                 # Results per API request; same as `aplimit` in MediaWiki docs. (optional)
                 "aplimit": "max"
-            }
+            },
+            # User-Agent used while requesting the API. (optional)
+            "user_agent": "MW2Fcitx/development"
         }
     },
     # Tweaks configurations as an list.
