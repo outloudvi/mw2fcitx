@@ -1,16 +1,13 @@
 import json
 import logging
-import os
-import re
 import shutil
 import sys
 from argparse import ArgumentParser
-from importlib import import_module
 
 
 from .build_dict import build
 from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
-from .utils import sanitize, is_libime_used, smart_rewrite
+from .utils import sanitize, is_libime_used, smart_rewrite, try_file
 
 
 def get_args(args):
@@ -28,29 +25,6 @@ def get_args(args):
                         help="configuration object name")
 
     return parser.parse_args(args)
-
-
-def try_file(file):
-    log = logging.getLogger(__name__)
-    log.debug(f"Finding config file: {file}")
-    if not os.access(file, os.R_OK):
-        log.error("File ({}) not readable.")
-        return False
-    file_realpath = os.path.realpath(file)
-    log.debug(f"Config file path: {file_realpath}")
-    file_path = os.path.dirname(file_realpath)
-    file_name = os.path.basename(file_realpath)
-    module_name = re.sub(r"\.py$", "", file_name)
-    config_file = False
-    try:
-        sys.path.insert(1, file_path)
-        config_file = import_module(module_name)
-    except Exception as e:
-        log.error(f"Error reading config: {str(e)}")
-        return False
-    finally:
-        sys.path.remove(file_path)
-    return config_file
 
 
 def inner_main(args):
