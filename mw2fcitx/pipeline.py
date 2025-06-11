@@ -32,7 +32,7 @@ class MWFPipeline():
             self.titles = titles
         else:
             self.titles.extend(titles)
-        log.debug(f"{len(titles)} title(s) imported.")
+        log.debug("%d title(s) imported.", len(titles))
         self.words = self.titles
 
     def write_titles_to_file(self, filename):
@@ -40,7 +40,7 @@ class MWFPipeline():
             with open(filename, "w", encoding="utf-8") as file:
                 file.write("\n".join(self.titles))
         except Exception as e:
-            log.error(f"File {filename} is not writable: {str(e)}")
+            log.error("File %s is not writable: %s", filename, str(e))
             sys.exit(1)
 
     def post_load(self, **kwargs):
@@ -52,8 +52,8 @@ class MWFPipeline():
             "title_limit") or -1
         if not os.access(filename, os.R_OK):
             log.error(
-                f"File {filename} is not readable; "
-                "remove this parameter (\"file_path\") or provide a readable file"
+                "File %s is not readable; "
+                "remove this parameter (\"file_path\") or provide a readable file", filename
             )
             sys.exit(1)
         with open(filename, "r", encoding="utf-8") as fp:
@@ -68,7 +68,7 @@ class MWFPipeline():
         self.words = self.titles
 
     def convert_to_words(self, pipelines):
-        log.debug(f"Running {len(pipelines)} pipelines")
+        log.debug("Running %d pipelines", len(pipelines))
         cnt = 0
         if callable(pipelines):
             pipelines = [pipelines]
@@ -76,18 +76,21 @@ class MWFPipeline():
         for i in pipelines:
             cnt += 1
             log.debug(
-                f"Running pipeline {cnt}/{len(pipelines)} ({i.__name__ or 'anonymous function'}')"
+                "Running pipeline %d/%d (%s)",
+                cnt,
+                len(pipelines),
+                i.__name__ or 'anonymous function'
             )
             titles = i(titles)
-        log.debug(f"Deduplicating {len(titles)} items")
+        log.debug("Deduplicating %d items", len(titles))
         self.words = dedup(titles)
         log.debug(
-            f"Deduplication completed. {len(self.words)} items left.")
+            "Deduplication completed. %d items left.", len(self.words))
 
     def export_words(self, converter="pypinyin", **kwargs):
         # "opencc" is an alias for backward compatibility
         if converter in ("pypinyin", "opencc"):
-            log.debug(f"Exporting {len(self.words)} words with OpenCC")
+            log.debug("Exporting %d words with OpenCC", len(self.words))
             from mw2fcitx.exporters.pypinyin import export
             fixfile_path = kwargs.get('fixfile')
             if fixfile_path is not None:
@@ -96,10 +99,10 @@ class MWFPipeline():
             self.exports = export(self.words, **kwargs)
         elif callable(converter):
             log.debug(
-                f"Exporting {len(self.words)} words with custom converter")
+                "Exporting %d words with custom converter", len(self.words))
             self.exports = converter(self.words, **kwargs)
         else:
-            log.error(f"No such exporter: {converter}")
+            log.error("No such exporter: %s", converter)
 
     def generate_dict(self, generator="pinyin", **kwargs):
         if generator == "pinyin":
@@ -115,4 +118,4 @@ class MWFPipeline():
             from mw2fcitx.dictgen import rime
             self.dict = rime(self.exports, **kwargs)
         else:
-            log.error(f"No such dictgen: {generator}")
+            log.error("No such dictgen: %s", generator)
