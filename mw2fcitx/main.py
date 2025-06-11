@@ -4,9 +4,9 @@ import shutil
 import sys
 from argparse import ArgumentParser
 
-
 from .build_dict import build
 from .const import LIBIME_BIN_NAME, LIBIME_REPOLOGY_URL
+from .logging import DEFAULT_LOG_LEVEL_STRING, LOG_LEVEL_MAPPING, setup_logger, update_log_level
 from .utils import sanitize, is_libime_used, smart_rewrite, try_file
 
 
@@ -23,6 +23,11 @@ def get_args(args):
                         dest="name",
                         default="exports",
                         help="configuration object name")
+    parser.add_argument('--log-level',
+                        dest="log_level",
+                        default=DEFAULT_LOG_LEVEL_STRING,
+                        help="log level",
+                        choices=LOG_LEVEL_MAPPING.keys())
 
     return parser.parse_args(args)
 
@@ -30,6 +35,7 @@ def get_args(args):
 def inner_main(args):
     log = logging.getLogger(__name__)
     options = get_args(args)
+    update_log_level(options.log_level)
     file = options.config
     objname = options.name
     if file.endswith(".py"):
@@ -71,8 +77,5 @@ def inner_main(args):
 
 
 def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s %(name)s %(levelname)s - %(message)s',
-    )
+    setup_logger()
     inner_main(sys.argv[1:])
