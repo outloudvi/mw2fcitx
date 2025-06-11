@@ -1,8 +1,8 @@
+import logging
 import re
 import yaml
 
-
-from ..logger import console
+log = logging.getLogger(__name__)
 
 
 def gen(text, **kwargs):
@@ -18,10 +18,11 @@ def gen(text, **kwargs):
         "sort": sort
     })
     text = f'---\n{header.strip()}\n...\n' + text
-    if kwargs.get("output"):
-        with open(kwargs.get("output"), "w", encoding="utf-8") as file:
+    output_path = kwargs.get("output")
+    if output_path is not None:
+        with open(output_path, "w", encoding="utf-8") as file:
             file.write(text)
     else:
         print(text)
-    console.info("Dictionary generated.")
+    log.info("Dictionary generated.")
     return text

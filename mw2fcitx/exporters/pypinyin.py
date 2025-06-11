@@ -1,8 +1,10 @@
+import logging
 from typing import List, Union
 from pypinyin import lazy_pinyin, load_phrases_dict
 
 from ..const import PYPINYIN_KW_CHARACTERS_TO_OMIT, PYPINYIN_KW_DISABLE_INSTINCT_PINYIN
-from ..logger import console
+
+log = logging.getLogger(__name__)
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
 
@@ -58,8 +60,8 @@ def export(words: List[Union[dict, str]], **kwargs) -> str:
         result += "\n"
         count += 1
         if count % 1000 == 0:
-            console.debug(str(count) + " converted")
+            log.debug(str(count) + " converted")
 
     if count % 1000 != 0 or count == 0:
-        console.debug(str(count) + " converted")
+        log.debug(str(count) + " converted")
     return result

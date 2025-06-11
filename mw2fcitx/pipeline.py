@@ -1,12 +1,14 @@
 # pylint: disable=import-outside-toplevel
 
 import json
+import logging
 import os
 import sys
 
 from .fetch import fetch_all_titles
 from .utils import dedup
-from .logger import console
+
+log = logging.getLogger(__name__)
 
 
 class MWFPipeline():
@@ -30,7 +32,7 @@ class MWFPipeline():
             self.titles = titles
         else:
             self.titles.extend(titles)
-        console.debug(f"{len(titles)} title(s) imported.")
+        log.debug(f"{len(titles)} title(s) imported.")
         self.words = self.titles
 
     def write_titles_to_file(self, filename):
@@ -38,7 +40,7 @@ class MWFPipeline():
             with open(filename, "w", encoding="utf-8") as file:
                 file.write("\n".join(self.titles))
         except Exception as e:
-            console.error(f"File {filename} is not writable: {str(e)}")
+            log.error(f"File {filename} is not writable: {str(e)}")
             sys.exit(1)
 
     def post_load(self, **kwargs):
@@ -49,7 +51,7 @@ class MWFPipeline():
         limit = kwargs.get("file_title_limit") or kwargs.get(
             "title_limit") or -1
         if not os.access(filename, os.R_OK):
-            console.error(
+            log.error(
                 f"File {filename} is not readable; "
                 "remove this parameter (\"file_path\") or provide a readable file"
             )
@@ -66,26 +68,26 @@ class MWFPipeline():
         self.words = self.titles
 
     def convert_to_words(self, pipelines):
-        console.debug(f"Running {len(pipelines)} pipelines")
+        log.debug(f"Running {len(pipelines)} pipelines")
         cnt = 0
         if callable(pipelines):
             pipelines = [pipelines]
         titles = self.titles
         for i in pipelines:
             cnt += 1
-            console.debug(
+            log.debug(
                 f"Running pipeline {cnt}/{len(pipelines)} ({i.__name__ or 'anonymous function'}')"
             )
             titles = i(titles)
-        console.debug(f"Deduplicating {len(titles)} items")
+        log.debug(f"Deduplicating {len(titles)} items")
         self.words = dedup(titles)
-        console.debug(
+        log.debug(
             f"Deduplication completed. {len(self.words)} items left.")
 
     def export_words(self, converter="pypinyin", **kwargs):
         # "opencc" is an alias for backward compatibility
         if converter in ("pypinyin", "opencc"):
-            console.debug(f"Exporting {len(self.words)} words with OpenCC")
+            log.debug(f"Exporting {len(self.words)} words with OpenCC")
             from mw2fcitx.exporters.pypinyin import export
             fixfile_path = kwargs.get('fixfile')
             if fixfile_path is not None:
@@ -93,18 +95,18 @@ class MWFPipeline():
                     kwargs["fix_table"] = json.load(fp)
             self.exports = export(self.words, **kwargs)
         elif callable(converter):
-            console.debug(
+            log.debug(
                 f"Exporting {len(self.words)} words with custom converter")
             self.exports = converter(self.words, **kwargs)
         else:
-            console.error(f"No such exporter: {converter}")
+            log.error(f"No such exporter: {converter}")
 
     def generate_dict(self, generator="pinyin", **kwargs):
         if generator == "pinyin":
             from mw2fcitx.dictgen import pinyin
             dest = kwargs.get("output")
             if not dest:
-                console.error(
+                log.error(
                     "Dictgen 'pinyin' can only output to files.\n" +
                     "Please give the file path in the 'output' argument.")
                 return
@@ -113,4 +115,4 @@ class MWFPipeline():
             from mw2fcitx.dictgen import rime
             self.dict = rime(self.exports, **kwargs)
         else:
-            console.error(f"No such dictgen: {generator}")
+            log.error(f"No such dictgen: {generator}")
