@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import sys
+from typing import Callable, List, Union
 
 from .fetch import fetch_all_titles
 from .utils import dedup
@@ -15,6 +16,9 @@ class MWFPipeline():
     """
     A pipeline for converting title lists to dictionaries.
     """
+
+    titles: list[str]
+    words: list[str]
 
     def __init__(self, api_path=""):
         self.api_path = api_path
@@ -67,11 +71,13 @@ class MWFPipeline():
     def reset_words(self):
         self.words = self.titles
 
-    def convert_to_words(self, pipelines):
-        log.debug("Running %d pipelines", len(pipelines))
-        cnt = 0
+    def convert_to_words(self, pipelines: Union[
+            Callable[[List[str]], List[str]],
+            List[Callable[[List[str]], List[str]]]]):
         if callable(pipelines):
             pipelines = [pipelines]
+        log.debug("Running %d pipelines", len(pipelines))
+        cnt = 0
         titles = self.titles
         for i in pipelines:
             cnt += 1
