@@ -105,7 +105,7 @@ def tweak_opencc_t2s(words):
 tweaks = [
     tweak_remove_word_includes(["○", "〇"]),
     tweak_split_word_with(
-        [":", "/", "(", ")", "（", "）", "【", "】", "『", "』", "／", " ", "!", "！"]),
+        [":", "/", "(", ")", "（", "）", "【", "】", "『", "』", "／", " ", "!", "！", "～", "~"]),
     tweak_len_more_than(1),
     tweak_remove_char("·"),
     tweak_trim_suffix(["系列", "列表", "对照表"]),
