@@ -1,7 +1,7 @@
 [project]
-authors = [{name = "Outvi V", email = "oss+pypi@outv.im>"}]
+authors = [{ name = "Outvi V", email = "oss+pypi@outv.im>" }]
 dependencies = [
-  "pypinyin (>=0.54.0,<0.55.0)",
+  "pypinyin (>=0.54.0)",
   "pyyaml (>=6.0.2,<7.0.0)",
   "requests (>=2.32.4,<3.0.0)",
 ]
@@ -30,19 +30,12 @@ classifiers = [
   'Topic :: Text Processing',
   'Topic :: Utilities',
 ]
-include = [
-  'mw2fcitx/**/*.json',
-]
+include = ['mw2fcitx/**/*.json']
 package-mode = true
-packages = [
-  {include = "mw2fcitx"},
-  {include = "tests", format = "sdist"},
-]
+packages = [{ include = "mw2fcitx" }, { include = "tests", format = "sdist" }]
 
 [project.optional-dependencies]
-opencc = [
-  "OpenCC (>=1.1.9,<2.0.0)",
-]
+opencc = ["OpenCC (>=1.1.9,<2.0.0)"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
@@ -63,11 +56,7 @@ based_on_style = "google"
 
 [tool.coverage.run]
 branch = true
-omit = [
-  "*/.venv/*",
-  "mw2fcitx/sample_config.py",
-  "tests/cli/conf_*.py",
-]
+omit = ["*/.venv/*", "mw2fcitx/sample_config.py", "tests/cli/conf_*.py"]
 
 [tool.coverage.html]
 directory = "coverage_html_report"
@@ -305,11 +294,24 @@ variable-naming-style = "snake_case"
 # check-protected-access-in-special-methods =
 
 # List of method names used to declare (i.e. assign) instance attributes.
-defining-attr-methods = ["__init__", "__new__", "setUp", "asyncSetUp", "__post_init__"]
+defining-attr-methods = [
+  "__init__",
+  "__new__",
+  "setUp",
+  "asyncSetUp",
+  "__post_init__",
+]
 
 # List of member names, which should be excluded from the protected access
 # warning.
-exclude-protected = ["_asdict", "_fields", "_replace", "_source", "_make", "os._exit"]
+exclude-protected = [
+  "_asdict",
+  "_fields",
+  "_replace",
+  "_source",
+  "_make",
+  "os._exit",
+]
 
 # List of valid names for the first argument in a class method.
 valid-classmethod-first-arg = ["cls"]
@@ -433,7 +435,13 @@ logging-modules = ["logging"]
 [tool.pylint."messages control"]
 # Only show warnings with the listed confidence levels. Leave empty to show all.
 # Valid levels: HIGH, CONTROL_FLOW, INFERENCE, INFERENCE_FAILURE, UNDEFINED.
-confidence = ["HIGH", "CONTROL_FLOW", "INFERENCE", "INFERENCE_FAILURE", "UNDEFINED"]
+confidence = [
+  "HIGH",
+  "CONTROL_FLOW",
+  "INFERENCE",
+  "INFERENCE_FAILURE",
+  "UNDEFINED",
+]
 
 # Disable the message, report, category or checker with the given id(s). You can
 # either give multiple identifiers separated by comma (,) or put this option
@@ -587,12 +595,22 @@ ignore-none = true
 ignore-on-opaque-inference = true
 
 # List of symbolic message names to ignore for Mixin members.
-ignored-checks-for-mixins = ["no-member", "not-async-context-manager", "not-context-manager", "attribute-defined-outside-init"]
+ignored-checks-for-mixins = [
+  "no-member",
+  "not-async-context-manager",
+  "not-context-manager",
+  "attribute-defined-outside-init",
+]
 
 # List of class names for which member attributes should not be checked (useful
 # for classes with dynamically set attributes). This supports the use of
 # qualified names.
-ignored-classes = ["optparse.Values", "thread._local", "_thread._local", "argparse.Namespace"]
+ignored-classes = [
+  "optparse.Values",
+  "thread._local",
+  "_thread._local",
+  "argparse.Namespace",
+]
 
 # Show a hint with possible names when a member name was not found. The aspect of
 # finding the hint is based on edit distance.
@@ -639,4 +657,10 @@ ignored-argument-names = "_.*|^ignored_|^unused_"
 
 # List of qualified module names which can have objects that can redefine
 # builtins.
-redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", "builtins", "io"]
+redefining-builtins-modules = [
+  "six.moves",
+  "past.builtins",
+  "future.builtins",
+  "builtins",
+  "io",
+]
