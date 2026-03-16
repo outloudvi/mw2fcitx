@@ -1,4 +1,4 @@
-from mw2fcitx.tweaks.moegirl import tweaks, tweak_opencc_t2s
+from mw2fcitx.tweaks.moegirl import tweaks, tweak_opencc_t2s, tweak_replace_characters
 
 exports = {
     "source": {
@@ -11,7 +11,12 @@ exports = {
             "output": "titles.txt"
         }
     },
-    "tweaks": tweaks + [tweak_opencc_t2s],
+    "tweaks": tweaks + [
+        tweak_opencc_t2s,
+        tweak_replace_characters({
+            "筿": "篠"
+        })
+    ],
     "converter": {
         "use": "opencc",
         "kwargs": {
