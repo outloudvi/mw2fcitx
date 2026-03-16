@@ -1,5 +1,5 @@
 from mw2fcitx.pipeline import MWFPipeline
-from mw2fcitx.tweaks.moegirl import tweak_opencc_t2s
+from mw2fcitx.tweaks.moegirl import tweak_opencc_t2s, tweak_replace_characters
 
 
 def test_opencc_t2s():
@@ -9,6 +9,17 @@ def test_opencc_t2s():
     print(pipeline.titles)
     pipeline.export_words(converter="pypinyin")
     assert pipeline.exports == "礼节\tli'jie\t0\n"
+
+
+def test_issue_65():
+    pipeline = MWFPipeline()
+    pipeline.load_titles(["篠泽广"])
+    pipeline.convert_to_words([tweak_opencc_t2s, tweak_replace_characters({
+        "筿": "篠"
+    })])
+    print(pipeline.titles)
+    pipeline.export_words(converter="pypinyin")
+    assert pipeline.exports == "篠泽广\txiao'ze'guang\t0\n"
 
 
 def test_dedup():
