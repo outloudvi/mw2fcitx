@@ -102,6 +102,20 @@ def tweak_opencc_t2s(words):
     return ret
 
 
+def tweak_replace_characters(mapping: dict[str, str]):
+    def cb(words: List[str]):
+        ret = []
+
+        for word in words:
+            for [src, dst] in mapping.items():
+                word = word.replace(src, dst)
+            ret.append(word)
+
+        return ret
+
+    return cb
+
+
 tweaks = [
     tweak_remove_word_includes(["○", "〇"]),
     tweak_split_word_with(
