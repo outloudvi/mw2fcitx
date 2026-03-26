@@ -131,4 +131,6 @@ Read [BREAKING_CHANGES.md](./BREAKING_CHANGES.md) for details.
 
 ## License
 
-[MIT License](https://github.com/outloudvi/mw2fcitx/blob/master/LICENSE)
+Code: [MIT License](https://github.com/outloudvi/mw2fcitx/blob/master/LICENSE)
+
+Please note that code/data for the Moegirlpedia dictionary may use different licenses.
